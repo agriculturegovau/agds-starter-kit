@@ -9,11 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ag.ds-next/a11y": "latest",
+    "@ag.ds-next/ag-branding": "latest",
+    "@ag.ds-next/body": "latest",
+    "@ag.ds-next/box": "latest",
+    "@ag.ds-next/button": "latest",
+    "@ag.ds-next/columns": "latest",
+    "@ag.ds-next/content": "latest",
+    "@ag.ds-next/core": "latest",
+    "@ag.ds-next/footer": "latest",
+    "@ag.ds-next/header": "latest",
+    "@ag.ds-next/heading": "latest",
+    "@ag.ds-next/icon": "latest",
+    "@ag.ds-next/link-list": "latest",
+    "@ag.ds-next/main-nav": "latest",
+    "@ag.ds-next/skip-link": "latest",
+    "@ag.ds-next/text": "latest",
+    "@emotion/react": "^11.8.2",
+    "facepaint": "^1.2.1",
     "next": "12.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "yarn": "^1.22.18"
   },
   "devDependencies": {
+    "@emotion/babel-plugin": "^11.7.2",
     "@types/node": "17.0.23",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
