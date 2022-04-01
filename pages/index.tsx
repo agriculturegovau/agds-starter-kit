@@ -1,36 +1,86 @@
-import type { NextPage } from "next";
-import { Body } from "@ag.ds-next/body";
-import { Content } from "@ag.ds-next/content";
-import { AppLayout } from "../components/AppLayout";
-import { DocumentTitle } from "../components/DocumentTitle";
+import { Logo, theme } from "@ag.ds-next/ag-branding";
+import styled from "@emotion/styled";
+import { H2, Heading } from "@ag.ds-next/heading";
+import { NextPage } from "next";
+import { Box, Flex, Stack } from "@ag.ds-next/box";
+import { Text, TextLink } from "@ag.ds-next/text";
+import { Header } from "@ag.ds-next/header";
+import Link from "next/link";
 
-const Home: NextPage = () => {
-  return (
-    <>
-      <DocumentTitle title="Home" />
-      <AppLayout>
-        <Content>
-          <Body>
-            <h1>AG Design System Starter Kit</h1>
-            <p>
-              This is a simple starter kit built using the AG Design System,
-              NextJS and Typescript.
-            </p>
-            <p>
-              For examples of common user interfaces, please refer to the{" "}
-              <a
-                href="https://steelthreads.github.io/agds-next/example-site/"
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
-                example site
-              </a>
-            </p>
-          </Body>
-        </Content>
-      </AppLayout>
-    </>
-  );
-};
+const Aside = styled(Box)`
+  padding: 5em 2em;
+  @media (min-width: 768px) {
+    text-align: center;
+  }
+`;
+
+const Contents = styled(Box)`
+  padding: 5em 2em;
+  grid-area: contents;
+`;
+
+const Main = styled.main`
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "logo"
+    "contents";
+  grid-template-rows: auto 2fr;
+  & > * {
+    padding: 2rem;
+  }
+  @media (min-width: 768px) {
+    grid-template-areas: "logo contents";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto;
+    & > * {
+      padding: 4rem;
+    }
+  }
+`;
+
+const prototypes = [{ url: "sample", label: "Sample" }];
+
+const Home: NextPage = () => (
+  <Flex palette="dark">
+    <Main id="content">
+      <Aside background="shade" color="text" alignItems="flex-start">
+        <Logo />
+      </Aside>
+
+      <Contents background="body" flexDirection="column">
+        <Heading as="h2" fontSize="xxxl">
+          Contents
+        </Heading>
+
+        <hr />
+
+        <Flex color="text" gap={2} flexDirection="column">
+          <Text as="p">This is an alpha prototype.</Text>
+          <Text as="p">
+            It&apos;s designed to capture key interactions in the tranche 1 view
+            of the agricultural export experience with the department.
+          </Text>
+          <Text as="p">
+            These concepts have been tested, refined and validated through user
+            research – but they don&apos;t represent the whole tranche 1
+            end-to-end view.
+          </Text>
+          <Text as="p">
+            We&apos;ll continue to expand on and evolve the prototype, to define
+            reusable patterns to support a simple, intuitive service that meets
+            user needs.
+          </Text>
+        </Flex>
+
+        <Stack color="text" gap={2} paddingTop={3} flexDirection="column">
+          {Array.from(prototypes).map(({ label, url }) => (
+            <TextLink href={`/${url}`}>{label}</TextLink>
+          ))}
+        </Stack>
+      </Contents>
+    </Main>
+  </Flex>
+);
 
 export default Home;

@@ -19,8 +19,13 @@ const NAV_LINKS: Array<NavListLink> = [
   { label: "Contact us" },
 ];
 
-export const SiteHeader = () => {
+type SiteHeaderProps = {
+  loggedIn?: boolean;
+};
+
+export const SiteHeader = ({ loggedIn }: SiteHeaderProps) => {
   const router = useRouter();
+  
   return (
     <Stack>
       <Header
@@ -46,18 +51,30 @@ export const SiteHeader = () => {
         links={NAV_LINKS}
         activePath={router.asPath}
         rightContent={
-          <Flex gap={1} justifyContent="space-between" alignItems="flex-start">
+          loggedIn ? (
             <Box>
               <NavListItem>
-                <Link href="">Sign in</Link>
+                <Link href="">My account</Link>
               </NavListItem>
             </Box>
-            <Box paddingTop={0.25}>
-              <Button variant="secondary" size="md">
-                Create an account
-              </Button>
-            </Box>
-          </Flex>
+          ) : (
+            <Flex
+              gap={1}
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <Box>
+                <NavListItem>
+                  <Link href="">Sign in</Link>
+                </NavListItem>
+              </Box>
+              <Box paddingTop={0.75}>
+                <Button variant="secondary" size="sm">
+                  Create an account
+                </Button>
+              </Box>
+            </Flex>
+          )
         }
       />
     </Stack>
