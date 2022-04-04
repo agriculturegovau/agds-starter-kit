@@ -1,11 +1,9 @@
 import { Logo, theme } from "@ag.ds-next/ag-branding";
 import styled from "@emotion/styled";
-import { H2, Heading } from "@ag.ds-next/heading";
+import { Heading } from "@ag.ds-next/heading";
 import { NextPage } from "next";
 import { Box, Flex, Stack } from "@ag.ds-next/box";
 import { Text, TextLink } from "@ag.ds-next/text";
-import { Header } from "@ag.ds-next/header";
-import Link from "next/link";
 
 const Aside = styled(Box)`
   padding: 5em 2em;
@@ -62,11 +60,6 @@ const Home: NextPage = () => (
             of the agricultural export experience with the department.
           </Text>
           <Text as="p">
-            These concepts have been tested, refined and validated through user
-            research – but they don&apos;t represent the whole tranche 1
-            end-to-end view.
-          </Text>
-          <Text as="p">
             We&apos;ll continue to expand on and evolve the prototype, to define
             reusable patterns to support a simple, intuitive service that meets
             user needs.
@@ -74,8 +67,10 @@ const Home: NextPage = () => (
         </Flex>
 
         <Stack color="text" gap={2} paddingTop={3} flexDirection="column">
-          {Array.from(prototypes).map(({ label, url }) => (
-            <TextLink href={`/${url}`}>{label}</TextLink>
+          {prototypes.map(({ label, url }) => (
+            <TextLink key={url} href={`/${url}`}>
+              {label}
+            </TextLink>
           ))}
         </Stack>
       </Contents>

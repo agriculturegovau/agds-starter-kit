@@ -11,20 +11,11 @@ const Home: NextPage = () => {
       <AppLayout>
         <Content>
           <Body>
-            <h1>AG Design System Starter Kit</h1>
+            <h1>Sample Page</h1>
             <p>
-              This is a simple starter kit built using the AG Design System,
-              NextJS and Typescript.
-            </p>
-            <p>
-              For examples of common user interfaces, please refer to the{" "}
-              <a
-                href="https://steelthreads.github.io/agds-next/example-site/"
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
-                example site
-              </a>
+              This is a sample page using the AG Design System. It&apos;s a good
+              place to play around with concepts if you don't want to spin up a
+              new page.
             </p>
           </Body>
         </Content>
