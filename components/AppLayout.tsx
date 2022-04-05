@@ -1,15 +1,20 @@
 import { ReactNode } from "react";
 import { Box, Flex } from "@ag.ds-next/box";
 import { SkipLinks } from "@ag.ds-next/skip-link";
-import { SiteHeader } from "./SiteHeader";
+import { NavLinkHref, SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 
 type AppLayoutProps = {
   children: ReactNode;
   loggedIn?: boolean;
+  navHrefOverride?: NavLinkHref;
 };
 
-export const AppLayout = ({ children, loggedIn }: AppLayoutProps) => {
+export const AppLayout = ({
+  children,
+  loggedIn,
+  navHrefOverride,
+}: AppLayoutProps) => {
   return (
     <>
       <SkipLinks
@@ -24,7 +29,7 @@ export const AppLayout = ({ children, loggedIn }: AppLayoutProps) => {
         palette="light"
         minHeight="100vh"
       >
-        <SiteHeader loggedIn={loggedIn} />
+        <SiteHeader loggedIn={loggedIn} navHrefOverride={navHrefOverride} />
         <Box as="main" id="main-content" flexGrow={1}>
           {children}
         </Box>

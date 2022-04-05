@@ -1,0 +1,175 @@
+import type { NextPage } from "next";
+import { Text } from "@ag.ds-next/text";
+import { Body } from "@ag.ds-next/body";
+import { Content } from "@ag.ds-next/content";
+import { AppLayout } from "@components/AppLayout";
+import { DocumentTitle } from "@components/DocumentTitle";
+import { Box, Flex } from "@ag.ds-next/box";
+import styled from "@emotion/styled";
+import { Heading } from "@ag.ds-next/heading";
+
+const RightImage = styled.img`
+  float: right;
+`;
+
+const ImageFader = styled(RightImage)`
+  mask-image: linear-gradient(270deg, black 8%, transparent 82%);
+  -webkit-mask-image: linear-gradient(270deg, black 8%, transparent 82%);
+`;
+
+const AbsoluteDiv = styled(Box)`
+  position: relative;
+  height: 100%;
+`;
+
+const sectionPadding = 5;
+
+const Home: NextPage = () => {
+  return (
+    <>
+      <DocumentTitle title="Home" />
+      <AppLayout navHrefOverride="/">
+        <Box background="shadeAlt">
+          <Box
+            gap={1}
+            height="500px"
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <AbsoluteDiv>
+              <ImageFader src="/images/cargo.png" height="500px" />
+            </AbsoluteDiv>
+            <AbsoluteDiv style={{ top: "-500px" }}>
+              <Content>
+                <Flex
+                  flexDirection="column"
+                  justifyContent="center"
+                  style={{
+                    width: "50%",
+                    height: "500px",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  <Heading as="h2" fontSize={["xl", "xl", "xxl", "xxxl"]}>
+                    Manage your Department export requirements from one place
+                  </Heading>
+                  <Text as="p" fontSize={["sm", "sm", "sm", "md"]}>
+                    Generate, edit and manage your export certificates and
+                    permits from your Export Service account — your new single
+                    place to manage interactions with the Department.
+                  </Text>
+                </Flex>
+              </Content>
+            </AbsoluteDiv>
+          </Box>
+        </Box>
+        <Content>
+          <Body>
+            <Box paddingY={sectionPadding}>
+              <Flex flexDirection="row" justifyContent="space-around">
+                <Box>
+                  <img src="/images/consignments.png" />
+                </Box>
+                <Box paddingLeft={5}>
+                  <Heading as="h2" fontSize="xl">
+                    A single place to manage your interactions with the
+                    Department
+                  </Heading>
+                  <ul>
+                    <li>
+                      See your consignments in the context of other relevant
+                      regulatory export information such as Micor and Industry
+                      Advice Notices
+                    </li>
+                    <li>
+                      Access export data and insights in relation to optimising
+                      regulation requirements
+                    </li>
+                    <li>
+                      Manage your Department interactions such as payments,
+                      notifications, through a single account
+                    </li>
+                  </ul>
+                </Box>
+              </Flex>
+            </Box>
+          </Body>
+        </Content>
+        <Box>
+          <Box
+            gap={1}
+            height="800px"
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <AbsoluteDiv style={{ zIndex: 10 }}>
+              <RightImage src="/images/exportApp.png" height="800px" />
+            </AbsoluteDiv>
+            <AbsoluteDiv style={{ top: "-800px" }}>
+              <Box paddingY={sectionPadding}>
+                <Content>
+                  <Flex
+                    flexDirection="column"
+                    justifyContent="flex-start"
+                    style={{
+                      width: "50%",
+                      padding: 0,
+                      margin: 0,
+                    }}
+                  >
+                    <Heading as="h2" fontSize="xl">
+                      Giving you the control to manage your certificate and
+                      permit needs directly
+                    </Heading>
+                    <ul>
+                      <li>
+                        Apply for export permits and certificates directly from
+                        the Department, without the need for third-party
+                        software or an agent
+                      </li>
+                      <li>
+                        Update and edit your Request for Permit/Request to
+                        Export yourself, 24-7
+                      </li>
+                      <li>
+                        Access Department support directly through the service
+                      </li>
+                    </ul>
+                  </Flex>
+                </Content>
+              </Box>
+              <Box paddingY={sectionPadding} background="shadeAlt">
+                <Content>
+                  <Flex
+                    flexDirection="column"
+                    justifyContent="flex-start"
+                    style={{
+                      width: "50%",
+                      padding: 0,
+                      margin: 0,
+                    }}
+                  >
+                    <Heading as="h2" fontSize="xl">
+                      Apply for permits and certificates the way that suits you
+                      and your business
+                    </Heading>
+                    <Text as="p">
+                      To be an exporter, you will always need to register with
+                      the Department, but there is choice in how this is managed
+                      and the level of direct interaction that suits you and
+                      your business. Explore the options for managing your
+                      export permits, certificates  and more.
+                    </Text>
+                  </Flex>
+                </Content>
+              </Box>
+            </AbsoluteDiv>
+          </Box>
+        </Box>
+      </AppLayout>
+    </>
+  );
+};
+
+export default Home;

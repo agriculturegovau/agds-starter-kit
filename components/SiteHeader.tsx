@@ -11,21 +11,30 @@ import {
   SearchBoxButton,
 } from "@ag.ds-next/search-box";
 
-const NAV_LINKS: Array<NavListLink> = [
+export type NavLinkHref =
+  | "/"
+  | "/new-exporters"
+  | "/export-operations"
+  | "/updates-and-insights"
+  | "/contact-us";
+
+const NAV_LINKS: Array<Pick<NavListLink, "label"> & { href: NavLinkHref }> = [
   { label: "Home", href: "/" },
-  { label: "New exporters" },
-  { label: "Export operations" },
-  { label: "Updates and insights" },
-  { label: "Contact us" },
+  { label: "New exporters", href: "/new-exporters" },
+  { label: "Export operations", href: "/export-operations" },
+  { label: "Updates and insights", href: "/updates-and-insights" },
+  { label: "Contact us", href: "/contact-us" },
 ];
 
 type SiteHeaderProps = {
+  navHrefOverride?: NavLinkHref;
   loggedIn?: boolean;
 };
 
-export const SiteHeader = ({ loggedIn }: SiteHeaderProps) => {
+export const SiteHeader = ({ navHrefOverride, loggedIn }: SiteHeaderProps) => {
   const router = useRouter();
-  
+  console.log(router.asPath);
+
   return (
     <Stack>
       <Header
@@ -49,7 +58,7 @@ export const SiteHeader = ({ loggedIn }: SiteHeaderProps) => {
         id="main-nav"
         variant="agriculture"
         links={NAV_LINKS}
-        activePath={router.asPath}
+        activePath={navHrefOverride ? navHrefOverride : router.asPath}
         rightContent={
           loggedIn ? (
             <Box>

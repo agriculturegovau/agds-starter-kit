@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
-import { AppLayout } from "../components/AppLayout";
-import { DocumentTitle } from "../components/DocumentTitle";
+import { AppLayout } from "@components/AppLayout";
+import { DocumentTitle } from "@components/DocumentTitle";
 
 const Home: NextPage = () => {
   return (
     <>
       <DocumentTitle title="Home" />
-      <AppLayout>
+      <AppLayout navHrefOverride="/">
         <Content>
           <Body>
             <h1>Sample Page</h1>

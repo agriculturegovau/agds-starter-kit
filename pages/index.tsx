@@ -19,6 +19,7 @@ const Contents = styled(Box)`
 
 const Main = styled.main`
   min-height: 100vh;
+  width: 100vw;
   display: grid;
   grid-template-areas:
     "logo"
