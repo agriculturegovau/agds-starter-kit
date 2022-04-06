@@ -7,6 +7,7 @@ import { DocumentTitle } from "@components/DocumentTitle";
 import { Box, Flex } from "@ag.ds-next/box";
 import styled from "@emotion/styled";
 import { Heading } from "@ag.ds-next/heading";
+import Image from "next/image";
 
 const RightImage = styled.img`
   float: right;
@@ -22,7 +23,26 @@ const AbsoluteDiv = styled(Box)`
   height: 100%;
 `;
 
+const BottomFlex = styled(Flex)`
+  margin-bottom: -40px;
+`;
+
 const sectionPadding = 5;
+
+const Section = ({
+  headingText,
+  children,
+}: {
+  headingText: string;
+  children: JSX.Element;
+}) => (
+  <>
+    <Heading as="h2" fontSize="xl">
+      {headingText}
+    </Heading>
+    {children}
+  </>
+);
 
 const Home: NextPage = () => {
   return (
@@ -31,7 +51,6 @@ const Home: NextPage = () => {
       <AppLayout navHrefOverride="/">
         <Box background="shadeAlt">
           <Box
-            gap={1}
             height="500px"
             justifyContent="space-between"
             alignItems="flex-start"
@@ -72,100 +91,88 @@ const Home: NextPage = () => {
                   <img src="/images/consignments.png" />
                 </Box>
                 <Box paddingLeft={5}>
-                  <Heading as="h2" fontSize="xl">
-                    A single place to manage your interactions with the
-                    Department
-                  </Heading>
-                  <ul>
-                    <li>
-                      See your consignments in the context of other relevant
-                      regulatory export information such as Micor and Industry
-                      Advice Notices
-                    </li>
-                    <li>
-                      Access export data and insights in relation to optimising
-                      regulation requirements
-                    </li>
-                    <li>
-                      Manage your Department interactions such as payments,
-                      notifications, through a single account
-                    </li>
-                  </ul>
+                  <Section
+                    headingText="A single place to manage your interactions with the
+                    Department"
+                  >
+                    <ul>
+                      <li>
+                        See your consignments in the context of other relevant
+                        regulatory export information such as Micor and Industry
+                        Advice Notices
+                      </li>
+                      <li>
+                        Access export data and insights in relation to
+                        optimising regulation requirements
+                      </li>
+                      <li>
+                        Manage your Department interactions such as payments,
+                        notifications, through a single account
+                      </li>
+                    </ul>
+                  </Section>
                 </Box>
               </Flex>
             </Box>
           </Body>
         </Content>
         <Box>
-          <Box
-            gap={1}
-            height="800px"
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
-            <AbsoluteDiv style={{ zIndex: 10 }}>
-              <RightImage src="/images/exportApp.png" height="800px" />
-            </AbsoluteDiv>
-            <AbsoluteDiv style={{ top: "-800px" }}>
-              <Box paddingY={sectionPadding}>
-                <Content>
-                  <Flex
-                    flexDirection="column"
-                    justifyContent="flex-start"
-                    style={{
-                      width: "50%",
-                      padding: 0,
-                      margin: 0,
-                    }}
-                  >
-                    <Heading as="h2" fontSize="xl">
-                      Giving you the control to manage your certificate and
-                      permit needs directly
-                    </Heading>
-                    <ul>
-                      <li>
-                        Apply for export permits and certificates directly from
-                        the Department, without the need for third-party
-                        software or an agent
-                      </li>
-                      <li>
-                        Update and edit your Request for Permit/Request to
-                        Export yourself, 24-7
-                      </li>
-                      <li>
-                        Access Department support directly through the service
-                      </li>
-                    </ul>
+          <Content>
+            <BottomFlex alignItems="flex-end">
+              <Flex
+                alignItems="center"
+                flexDirection="column"
+              >
+                <Box paddingY={sectionPadding}>
+                  <Flex flexDirection="column" justifyContent="flex-start">
+                    <Section
+                      headingText="Giving you the control to manage your certificate and
+                      permit needs directly"
+                    >
+                      <ul>
+                        <li>
+                          Apply for export permits and certificates directly
+                          from the Department, without the need for third-party
+                          software or an agent
+                        </li>
+                        <li>
+                          Update and edit your Request for Permit/Request to
+                          Export yourself, 24-7
+                        </li>
+                        <li>
+                          Access Department support directly through the service
+                        </li>
+                      </ul>
+                    </Section>
                   </Flex>
-                </Content>
-              </Box>
-              <Box paddingY={sectionPadding} background="shadeAlt">
-                <Content>
-                  <Flex
-                    flexDirection="column"
-                    justifyContent="flex-start"
-                    style={{
-                      width: "50%",
-                      padding: 0,
-                      margin: 0,
-                    }}
-                  >
-                    <Heading as="h2" fontSize="xl">
-                      Apply for permits and certificates the way that suits you
-                      and your business
-                    </Heading>
-                    <Text as="p">
-                      To be an exporter, you will always need to register with
-                      the Department, but there is choice in how this is managed
-                      and the level of direct interaction that suits you and
-                      your business. Explore the options for managing your
-                      export permits, certificates  and more.
-                    </Text>
+                </Box>
+                <Box paddingY={sectionPadding}>
+                  <Flex flexDirection="column" justifyContent="flex-start">
+                    <Section
+                      headingText="Apply for permits and certificates the way that suits you
+                      and your business"
+                    >
+                      <Text as="p">
+                        To be an exporter, you will always need to register with
+                        the Department, but there is choice in how this is
+                        managed and the level of direct interaction that suits
+                        you and your business. Explore the options for managing
+                        your export permits, certificates and more.
+                      </Text>
+                    </Section>
                   </Flex>
-                </Content>
+                </Box>
+              </Flex>
+              <Box width="200%" display={{md: "none", lg: "block"}}>
+                <Image
+                  src="/images/exportApp.png"
+                  layout="responsive"
+                  width="1272"
+                  height="1862"
+                />
               </Box>
-            </AbsoluteDiv>
-          </Box>
+            </BottomFlex>
+          </Content>
         </Box>
       </AppLayout>
     </>
