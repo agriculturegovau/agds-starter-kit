@@ -93,6 +93,33 @@ const CentreTextFlex = styled(Flex)(() => ({
   textAlign: "center",
 }));
 
+const BorderlessTableHead = styled(TableHead)(() => ({
+  borderBottomWidth: 0,
+  backgroundColor: "#aa00aa",
+}));
+
+const BordelessTableHeader = styled(TableHeader)(() => ({
+  borderBottomWidth: "4px",
+  borderBottomColor: "#fff",
+}));
+
+const BorderedTableHeader = styled(TableHeader)(() => ({
+  borderBottomWidth: "4px",
+  borderBottomColor: "#00558B",
+}));
+
+const BorderlessTableCell = styled(TableCell)(() => ({
+  border: "none",
+}));
+
+const ParagraphBox = styled(Box)(() => ({
+  marginTop: "1rem",
+}));
+
+const TextCentreBox = styled(Box)(() => ({
+  textAlign: "center",
+}));
+
 const Matrix: NextPage = () => {
   return (
     <>
@@ -103,16 +130,18 @@ const Matrix: NextPage = () => {
             <Heading as="h2" fontSize="xl">
               Options for applying for your export permits and certificates
             </Heading>
-            <Box paddingTop={4}>
+            <Box paddingY={4}>
               <Table>
-                <TableHead>
+                <BorderlessTableHead>
                   <tr>
-                    <TableHeader scope="col" width="10%">
-                      <Box></Box>
-                    </TableHeader>
+                    <BordelessTableHeader
+                      scope="col"
+                      width="10%"
+                    ></BordelessTableHeader>
                     {tableData.headers.map(({ callout, detail, title }) => (
-                      <TableHeader scope="col" width="30%">
+                      <BorderedTableHeader scope="col" width="30%">
                         <CentreTextFlex
+                          paddingX={1}
                           flexDirection="column"
                           alignItems="center"
                         >
@@ -129,36 +158,57 @@ const Matrix: NextPage = () => {
                           </Text>
                           <Text>{detail}</Text>
                         </CentreTextFlex>
-                      </TableHeader>
+                      </BorderedTableHeader>
                     ))}
                   </tr>
-                </TableHead>
+                </BorderlessTableHead>
                 <TableBody>
                   {tableData.body.map((row) => (
                     <tr>
-                      {row.map((cell, cellIndex) => (
-                        <TableCell>
-                          <Text
-                            color={cellIndex === 0 ? "action" : "text"}
-                            fontWeight={cellIndex === 0 ? "bold" : "normal"}
-                          >
-                            {cell}
-                          </Text>
-                        </TableCell>
-                      ))}
+                      {row.map((cell, cellIndex) =>
+                        cellIndex === 0 ? (
+                          <BorderlessTableCell textAlign="left">
+                            <Text color="action" fontWeight="bold">
+                              {cell}
+                            </Text>
+                          </BorderlessTableCell>
+                        ) : (
+                          <TableCell textAlign="center">
+                            <Box paddingX={2} paddingBottom={2}>
+                              {cell.split("\n").map((line) => (
+                                <ParagraphBox>
+                                  <Text
+                                    paddingTop={1}
+                                    color="text"
+                                    fontWeight="normal"
+                                  >
+                                    {line}
+                                  </Text>
+                                </ParagraphBox>
+                              ))}
+                            </Box>
+                          </TableCell>
+                        )
+                      )}
                     </tr>
                   ))}
                   <tr>
-                    <TableCell></TableCell>
-                    <TableCell>
-                      <Button>Select</Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button>Select</Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button>Select</Button>
-                    </TableCell>
+                    <BorderlessTableCell></BorderlessTableCell>
+                    <BorderlessTableCell>
+                      <TextCentreBox>
+                        <Button variant="secondary">Select</Button>
+                      </TextCentreBox>
+                    </BorderlessTableCell>
+                    <BorderlessTableCell>
+                      <TextCentreBox>
+                        <Button variant="secondary">Select</Button>
+                      </TextCentreBox>
+                    </BorderlessTableCell>
+                    <BorderlessTableCell>
+                      <TextCentreBox>
+                        <Button variant="secondary">Select</Button>
+                      </TextCentreBox>
+                    </BorderlessTableCell>
                   </tr>
                 </TableBody>
               </Table>
