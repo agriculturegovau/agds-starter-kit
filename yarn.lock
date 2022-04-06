@@ -93,6 +93,11 @@
   resolved "https://registry.yarnpkg.com/@ag.ds-next/skip-link/-/skip-link-1.0.3.tgz#57f7b57f95ea5bbbe2379ed563d0a4279d90c521"
   integrity sha512-i8f+1eCgNZq6PL1ZqZEa6RzmTzEWQIKnhyLvxDeaJEUvM8l1HJRhyuZF0a8hNFqd6Yfity6CfxldiKL1yjgGOQ==
 
+"@ag.ds-next/table@latest":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/table/-/table-1.0.0.tgz#b863c6737ecaf9bc20554efa3abc53c84f487dc4"
+  integrity sha512-YOnaYo+8Yhj6IKRzX1cg/cf57J5YgTqTPpuW2Gmnt86JCtICWzrk5eIvzElz2c0GCSzr0RSQt+nxr+aa97/LmQ==
+
 "@ag.ds-next/text-input@latest":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/text-input/-/text-input-4.0.0.tgz#8297e819c50cc1a3adb64b23df714bdace8d4ae9"

@@ -38,7 +38,11 @@ const Main = styled.main`
   }
 `;
 
-const prototypes = [{ url: "sample", label: "Sample" }];
+const prototypes = [
+  { url: "sample", label: "Sample" },
+  { url: "splash", label: "Splash Page" },
+  { url: "matrix", label: "Options Matrix" },
+];
 
 const Home: NextPage = () => (
   <Flex palette="dark">

@@ -33,7 +33,6 @@ type SiteHeaderProps = {
 
 export const SiteHeader = ({ navHrefOverride, loggedIn }: SiteHeaderProps) => {
   const router = useRouter();
-  console.log(router.asPath);
 
   return (
     <Stack>
