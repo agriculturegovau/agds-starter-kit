@@ -22,7 +22,6 @@ const BorderedBox = styled(Box)(() => ({
   "&:hover": {
     cursor: "pointer",
     backgroundColor: "#eee",
-    textDecoration: "underline",
   },
 }));
 
@@ -44,7 +43,7 @@ export const QuickActionBox = ({
       <StyledButton
         variant="tertiary"
         onClick={() => {
-          console.log("boo");
+          onClick && onClick();
         }}
       >
         <Flex
@@ -56,9 +55,11 @@ export const QuickActionBox = ({
         >
           <Box>{Icon && <Icon />}</Box>
           <Box>
-            <Text color="action" fontSize="lg" fontWeight="bold">
-              {text}
-            </Text>
+            {text.split("\n").map((line) => (
+              <Text as="p" color="action" fontSize="lg" fontWeight="bold">
+                {line}
+              </Text>
+            ))}
           </Box>
         </Flex>
       </StyledButton>

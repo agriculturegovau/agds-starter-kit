@@ -44,7 +44,7 @@ const Home: NextPage = () => {
                 />
                 <QuickActionBox
                   Icon={AddressBookIcon}
-                  text={"View my address book"}
+                  text={`View my address book\n${"\u00A0"}`}
                 />
               </Flex>
             </Box>
