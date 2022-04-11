@@ -22,10 +22,20 @@
   resolved "https://registry.yarnpkg.com/@ag.ds-next/box/-/box-4.0.3.tgz#805d3eb6bc100db0ed5d6d36cf522215547277c4"
   integrity sha512-+U8u0bI48/pnsM6Xt6cOANN2M9/CK8yLGQN2/cBW2Vhhwy2SfuYnCQrZV/tH2OOJUFFJhHtiZhj8nCbwOrJdcg==
 
+"@ag.ds-next/breadcrumbs@latest":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/breadcrumbs/-/breadcrumbs-7.0.0.tgz#319b535262db408621395cc3232558421ee2d6de"
+  integrity sha512-qkpWC7M+ZB2rcG+v9B036ns9EXBHLPSWolIPFuZiz5xoAJtL2DDnGlw6Qd9/qYJa3NEO5x8H33gpuQAjGpMbzA==
+
 "@ag.ds-next/button@latest":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/button/-/button-4.0.3.tgz#20f678072ff2cdb9b3505de286550ca4dcb29523"
   integrity sha512-nm7DiNXn0FnpXfBQEmWAdKIjEA2v0iy+KmSltYtdvOj1cq58YKJz+8+H7ohoYGlA3P98tUNJ9pKDW1Z8CPs2lQ==
+
+"@ag.ds-next/card@latest":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/card/-/card-3.0.0.tgz#e947da58c8ca4e3c6cd8966344ddac7b0cc87395"
+  integrity sha512-sboxFRt98pwbeiefbmayXqIZ4Q+4diLRGa3cDoaFZXkPpaYMCRUbN+eMPW6Su9V69hzU8ulMX8aNEO5Tg+4oPQ==
 
 "@ag.ds-next/columns@latest":
   version "3.0.3"

@@ -95,10 +95,9 @@ const CentreTextFlex = styled(Flex)(() => ({
 
 const BorderlessTableHead = styled(TableHead)(() => ({
   borderBottomWidth: 0,
-  backgroundColor: "#aa00aa",
 }));
 
-const BordelessTableHeader = styled(TableHeader)(() => ({
+const BorderlessTableHeader = styled(TableHeader)(() => ({
   borderBottomWidth: "4px",
   borderBottomColor: "#fff",
 }));
@@ -134,10 +133,10 @@ const Matrix: NextPage = () => {
               <Table>
                 <BorderlessTableHead>
                   <tr>
-                    <BordelessTableHeader
+                    <BorderlessTableHeader
                       scope="col"
                       width="10%"
-                    ></BordelessTableHeader>
+                    ></BorderlessTableHeader>
                     {tableData.headers.map(({ callout, detail, title }) => (
                       <BorderedTableHeader scope="col" width="30%">
                         <CentreTextFlex
