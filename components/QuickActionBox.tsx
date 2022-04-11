@@ -56,7 +56,13 @@ export const QuickActionBox = ({
           <Box>{Icon && <Icon />}</Box>
           <Box>
             {text.split("\n").map((line) => (
-              <Text as="p" color="action" fontSize="lg" fontWeight="bold">
+              <Text
+                key={line}
+                as="p"
+                color="action"
+                fontSize="lg"
+                fontWeight="bold"
+              >
                 {line}
               </Text>
             ))}

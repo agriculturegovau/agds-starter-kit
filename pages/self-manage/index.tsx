@@ -1,4 +1,9 @@
 import type { NextPage } from "next";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemContent,
+} from "@ag.ds-next/accordion";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
 import { AppLayout } from "@components/AppLayout";
@@ -10,6 +15,7 @@ import { QuickActionBox } from "@components/QuickActionBox";
 import { NewIcon } from "@components/icons/New";
 import { CopyIcon } from "@components/icons/CopyIcon";
 import { AddressBookIcon } from "@components/icons/AddressBook";
+import { RexInfo } from "@components/RexInfo";
 
 const Home: NextPage = () => {
   return (
@@ -29,7 +35,7 @@ const Home: NextPage = () => {
                 Manage my consignments
               </Heading>
             </Box>
-            <Box>
+            <Box paddingY={4}>
               <Heading as="h3" fontSize="xl">
                 Quick actions
               </Heading>
@@ -47,6 +53,18 @@ const Home: NextPage = () => {
                   text={`View my address book\n${"\u00A0"}`}
                 />
               </Flex>
+            </Box>
+
+            <hr />
+
+            <Box paddingY={4}>
+              <Heading as="h3" fontSize="xl">
+                In-progress export permit and certificate applications
+              </Heading>
+
+              <Box paddingTop={4}>
+                <RexInfo />
+              </Box>
             </Box>
           </Body>
         </Content>
