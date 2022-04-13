@@ -1,107 +1,113 @@
+import { RexInfoHeader } from "./RexInfoHeader";
 import { Box, Flex } from "@ag.ds-next/box";
 import { Text } from "@ag.ds-next/text";
 import styled from "@emotion/styled";
-import { ChevronRightIcon } from "@ag.ds-next/icon";
+import React, { useRef, useState } from "react";
+import { useSpring, animated } from "react-spring";
+import { useElementSize, usePrefersReducedMotion } from "@ag.ds-next/core";
+import { RexDetails } from "src/rex";
 
-const HeadingBox = styled(Box)(() => ({
+const BodyBox = styled(Box)(() => ({
   border: "1px solid",
+  borderTop: "none",
+  paddingTop: "4px",
+  marginTop: "-4px",
   borderColor: "#D3D3D3",
+  transitionDuration: "0.2s",
 }));
 
-type RexStatus = "REVIEW" | "DRAFT" | "APPROVED";
-
-const TagBox = styled(Box)(({ color }) => {
-  const finalColor = color === "muted" ? "#61696B" : "#0B996C";
-
-  return {
-    border: "1px solid",
-    borderColor: finalColor,
-    color: color === "success" ? "#fff" : finalColor,
-    backgroundColor: color === "success" ? finalColor : "#fff",
-  };
-});
-
-const rexDetails = {
-  number: "REX0000236026",
-  date: "04/01/2022",
-  product: "Cheddar cheese (FTA)",
-  exporting: "United States",
-  status: "REVIEW",
-  certificate: "7679",
-  departureDate: "13/02/2022",
+type RexInfoProps = {
+  rexDetails: RexDetails;
 };
 
-const RexTag = (status: RexStatus) => {
-  switch (status) {
-    case "REVIEW":
-      return () => (
-        <>
-          <TagBox paddingX={0.5} rounded color="action">
-            In Review
-          </TagBox>
-        </>
-      );
-    case "DRAFT":
-      return () => (
-        <>
-          <TagBox paddingX={0.5} rounded color="muted">
-            Draft
-          </TagBox>
-        </>
-      );
-    case "APPROVED":
-      return () => (
-        <>
-          <TagBox paddingX={0.5} rounded color="success">
-            Approved
-          </TagBox>
-        </>
-      );
-  }
-};
+export const RexInfo = ({ rexDetails }: RexInfoProps) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-export const RexInfo = () => {
-  const Tag = RexTag(rexDetails.status as RexStatus);
+  const ref = useRef<HTMLDivElement>(null);
+  const { height } = useElementSize(ref);
+
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const style = useSpring({
+    from: { height: 0 },
+    to: { height: isOpen ? height : 0 },
+    immediate: prefersReducedMotion,
+  });
+
   return (
-    <HeadingBox rounded padding={1.5}>
-      <Flex
-        flexDirection="row"
-        flexWrap="nowrap"
-        justifyContent={"space-between"}
-      >
-        <Flex flexDirection="column">
-          <ChevronRightIcon />
-        </Flex>
-        <Flex flexDirection="column">
-          <Text fontSize="sm" fontWeight="bold">
-            REX Number
-          </Text>
-          <Text fontSize="sm">
-            <a>{rexDetails.number}</a>
-          </Text>
-        </Flex>
-        <Flex flexDirection="column">
-          <Text fontSize="sm" fontWeight="bold">
-            Date
-          </Text>
-          <Text fontSize="sm">{rexDetails.date}</Text>
-        </Flex>
-        <Flex flexDirection="column">
-          <Text fontSize="sm" fontWeight="bold">
-            Product
-          </Text>
-          <Text fontSize="sm">{rexDetails.product}</Text>
-        </Flex>
-        <Flex flexDirection="column">
-          <Text fontSize="sm" fontWeight="bold">
-            Exporting to
-          </Text>
-          <Text fontSize="sm">{rexDetails.exporting}</Text>
-        </Flex>
-        <Flex flexDirection="column">
-          <Tag />
-        </Flex>
-      </Flex>
-    </HeadingBox>
+    <>
+      <RexInfoHeader
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+        isOpen={isOpen}
+        rexDetails={rexDetails}
+      />
+      <animated.section style={{ overflow: "hidden", ...style }}>
+        <BodyBox ref={ref}>
+          <Flex paddingY={1} height="100%" flexDirection="row">
+            <Flex paddingX={6} flexDirection="column">
+              <Box paddingY={1}>
+                <Text fontSize="sm" fontWeight="bold">
+                  <a>View Detail</a>
+                </Text>
+              </Box>
+
+              <Flex flexDirection="column" paddingY={1}>
+                <Text fontSize="sm" fontWeight="bold">
+                  Actions
+                </Text>
+                {[
+                  "Amend",
+                  "Copy for new REX",
+                  "Request assistance with REX",
+                  "View REX extract",
+                  "Withdraw",
+                ].map((link) => (
+                  <Text key={link} fontSize="sm" paddingY={0.5}>
+                    <a>{link}</a>
+                  </Text>
+                ))}
+              </Flex>
+
+              <Flex flexDirection="column" paddingY={1}>
+                <Text fontSize="sm" fontWeight="bold">
+                  View Certificates
+                </Text>
+                {["Export Certificate", "Quota Certificate"].map((link) => (
+                  <Text key={link} fontSize="sm" paddingY={0.5}>
+                    <a>{link}</a>
+                  </Text>
+                ))}
+              </Flex>
+            </Flex>
+            <Flex paddingX={6} flexDirection="column">
+              <Flex flexDirection="column" paddingY={1}>
+                {[
+                  { label: "Products", value: rexDetails.product },
+                  { label: "Exporting to", value: rexDetails.exporting },
+                  {
+                    label: "Certificate Number",
+                    value: rexDetails.certificate,
+                  },
+                  {
+                    label: "Date of departure",
+                    value: rexDetails.departureDate,
+                  },
+                ].map((item) => (
+                  <React.Fragment key={item.label}>
+                    <Text fontSize="sm" fontWeight="bold">
+                      {item.label}
+                    </Text>
+                    <Text fontSize="sm" paddingY={0.5}>
+                      {item.value}
+                    </Text>
+                  </React.Fragment>
+                ))}
+              </Flex>
+            </Flex>
+          </Flex>
+        </BodyBox>
+      </animated.section>
+    </>
   );
 };

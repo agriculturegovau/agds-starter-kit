@@ -7,14 +7,6 @@
   resolved "https://registry.yarnpkg.com/@ag.ds-next/a11y/-/a11y-1.0.1.tgz#72783407798e4f619d3dacd0678d0d869d1e2d48"
   integrity sha512-gp879zyDNJDsHHAwXf80c1idL0NU1bZsH2MEZd2+Y3UDKPwX5i+1hmTtQe0HXiKFrhfQCrffGaY03K5thhPsRA==
 
-"@ag.ds-next/accordion@latest":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@ag.ds-next/accordion/-/accordion-4.0.0.tgz#a472c2ce9fbf5f618c141d7dc7952a4cea940cb9"
-  integrity sha512-yri+wPaThHvq93zawXAqehPKfWbSosPRHIpFuaQKDatyK5VcBs8Lhw32lJxMj7JxcPWngrtcnLZq1V58Kd5bxA==
-  dependencies:
-    "@reach/auto-id" "^0.16.0"
-    react-spring "^9.4.3"
-
 "@ag.ds-next/ag-branding@latest":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/ag-branding/-/ag-branding-4.1.0.tgz#5ce03d54bbbee5c62c626d1e178ea47c437f848f"
@@ -115,11 +107,6 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/table/-/table-1.0.0.tgz#b863c6737ecaf9bc20554efa3abc53c84f487dc4"
   integrity sha512-YOnaYo+8Yhj6IKRzX1cg/cf57J5YgTqTPpuW2Gmnt86JCtICWzrk5eIvzElz2c0GCSzr0RSQt+nxr+aa97/LmQ==
-
-"@ag.ds-next/tags@latest":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ag.ds-next/tags/-/tags-2.0.0.tgz#5652c1ec6b51706474962cbf491e526447e830c5"
-  integrity sha512-eAyNEEAzk4LxDCPCzU4NaM1E+AhGICypTtzHMasG5LJ6Y6dU0exYWoJCzRmrzzj3TMKfx/715TdiJb2B+shaXQ==
 
 "@ag.ds-next/text-input@latest":
   version "4.0.0"
@@ -844,6 +831,11 @@ damerau-levenshtein@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
+
+date-fns@^2.28.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
+  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
 
 debug@^2.6.9:
   version "2.6.9"
@@ -1900,7 +1892,7 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-spring@^9.4.3:
+react-spring@^9.4.4:
   version "9.4.4"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.4.4.tgz#0a53440013f97c1ebaa739a24a902487f36a5c1e"
   integrity sha512-VOqilh9DJBsS6Pf550YLhdReS3j9a2AQVh7NcsNtWoxTYIeuErWi6ym0++6bBhQp4yT5xvVvUDaJ8ez8vrFgaw==
