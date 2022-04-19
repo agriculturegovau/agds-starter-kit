@@ -42,6 +42,7 @@ const prototypes = [
   { url: "sample", label: "Sample" },
   { url: "splash", label: "Splash Page" },
   { url: "matrix", label: "Options Matrix" },
+  { url: "self-manage", label: "Self Manage Portal" },
 ];
 
 const Home: NextPage = () => (

@@ -13,6 +13,7 @@ import { CopyIcon } from "@components/icons/CopyIcon";
 import { AddressBookIcon } from "@components/icons/AddressBook";
 import { RexInfo } from "@components/RexInfo";
 import { generateRexDetails, rexDetails } from "src/rex";
+import { FilledBar } from "@components/FilledBar";
 
 const rexData = Array(10)
   .fill(undefined)
@@ -111,7 +112,36 @@ const Home: NextPage = () => {
               <Heading as="h3" fontSize="xl">
                 Quota
               </Heading>
-
+              <Box paddingTop={4}>
+                <Text fontSize="sm" fontWeight="bold">
+                  Allocated
+                </Text>
+                <Flex flexDirection="row">
+                  <Box>USA FTA Cheddar Cheese</Box>
+                  <Flex flexDirection="column" flexGrow={1}>
+                    <Box></Box>
+                    <FilledBar
+                      paddingX={1}
+                      height={"10px"}
+                      rounded
+                      backgroundColor={"#eee"}
+                      segments={Array(5)
+                        .fill(undefined)
+                        .map((_, i) => ({
+                          color: `hsl(${i * i * i * i * 190}, 80%, 60%)`,
+                          percent: 0.03 * (i + 1),
+                        }))}
+                      type="stack"
+                    />
+                  </Flex>
+                  <Flex flexDirection="column">
+                    <Text fontSize="sm" fontWeight="bold">
+                      400kg remaining
+                    </Text>
+                    <Text fontSize="sm">1000kg total</Text>
+                  </Flex>
+                </Flex>
+              </Box>
               <Box paddingTop={4}></Box>
             </Box>
           </Body>
