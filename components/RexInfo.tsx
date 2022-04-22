@@ -56,13 +56,16 @@ export const RexInfo = ({ rexDetails }: RexInfoProps) => {
                 <Text fontSize="sm" fontWeight="bold">
                   Actions
                 </Text>
-                {[
-                  "Amend",
-                  "Copy for new REX",
-                  "Request assistance with REX",
-                  "View REX extract",
-                  "Withdraw",
-                ].map((link) => (
+                {(rexDetails.status === "APPROVED"
+                  ? ["Copy for new REX", "View REX extract"]
+                  : [
+                      "Amend",
+                      "Copy for new REX",
+                      "Request assistance with REX",
+                      "View REX extract",
+                      "Withdraw",
+                    ]
+                ).map((link) => (
                   <Text key={link} fontSize="sm" paddingY={0.5}>
                     <a>{link}</a>
                   </Text>

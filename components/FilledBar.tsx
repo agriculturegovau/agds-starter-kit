@@ -50,16 +50,21 @@ export const FilledBar = ({
     if (type === "overlap") {
       setInnerBars(segments.sort((a, b) => b.percent - a.percent));
     } else {
-      const modBars = segments.map((bar, index) => {
-        const newBar = { ...bar };
-        newBar.percent = segments.reduce((pv, cv, i) => {
-          if (i <= index) {
-            return pv + cv.percent;
-          }
-          return pv;
-        }, 0);
-        return newBar;
-      });
+      const modBars = segments
+        .filter((bar) => {
+          console.log(bar.percent);
+          return bar.percent > 0;
+        })
+        .map((bar, index) => {
+          const newBar = { ...bar };
+          newBar.percent = segments.reduce((pv, cv, i) => {
+            if (i <= index) {
+              return pv + cv.percent;
+            }
+            return pv;
+          }, 0);
+          return newBar;
+        });
       console.log({ segments, modBars });
 
       setInnerBars(modBars.sort((a, b) => b.percent - a.percent));
@@ -78,6 +83,7 @@ export const FilledBar = ({
           const width = parentWidth * percent * (percent > 1 ? 0.001 : 1);
           return (
             <InnerBar
+              key={color}
               rounded={rounded}
               backgroundColor={color}
               height={height}

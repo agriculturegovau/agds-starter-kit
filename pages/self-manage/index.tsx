@@ -12,18 +12,51 @@ import { NewIcon } from "@components/icons/New";
 import { CopyIcon } from "@components/icons/CopyIcon";
 import { AddressBookIcon } from "@components/icons/AddressBook";
 import { RexInfo } from "@components/RexInfo";
-import { generateRexDetails, rexDetails } from "src/rex";
+import { generateRexDetails, RexDetails, rexDetails } from "src/rex";
 import { FilledBar } from "@components/FilledBar";
+import { useState } from "react";
+import { NeedHelp } from "@components/NeedHelp";
 
-const rexData = Array(10)
-  .fill(undefined)
-  .map(() => generateRexDetails());
+const generateMultipleRexData = (num: number, completed?: boolean) =>
+  Array(10)
+    .fill(undefined)
+    .map(() => generateRexDetails(completed));
 
-const oldRexData = Array(5)
-  .fill(undefined)
-  .map(() => generateRexDetails(true));
+type UserData = {
+  rexData: Array<RexDetails>;
+  quotas: Array<{
+    title: string;
+    type: "Allocated" | "First come first serve (FCFS)";
+    total: number;
+    used: number;
+    pending: number;
+  }>;
+};
 
 const Home: NextPage = () => {
+  const [userData, setUserData] = useState<UserData>({
+    rexData: [
+      ...generateMultipleRexData(Math.floor(Math.random() * 10) + 5),
+      ...generateMultipleRexData(Math.floor(Math.random() * 8) + 2, true),
+    ],
+    quotas: [
+      {
+        title: "Test Quota 1",
+        type: "Allocated",
+        total: 1000,
+        used: 250,
+        pending: 150,
+      },
+      {
+        title: "Test Quota 2",
+        type: "First come first serve (FCFS)",
+        total: 4500,
+        used: 1500,
+        pending: 0,
+      },
+    ],
+  });
+
   return (
     <>
       <DocumentTitle title="Home" />
@@ -47,16 +80,16 @@ const Home: NextPage = () => {
               </Heading>
               <Flex flexDirection="row" flexWrap="wrap" paddingTop={1}>
                 <QuickActionBox
-                  Icon={NewIcon}
-                  text="Make a new request to export application"
+                  icon={NewIcon}
+                  title="Make a new request to export application"
                 />
                 <QuickActionBox
-                  Icon={CopyIcon}
-                  text="Copy a previous export application"
+                  icon={CopyIcon}
+                  title="Copy a previous export application"
                 />
                 <QuickActionBox
-                  Icon={AddressBookIcon}
-                  text={`View my address book\n${"\u00A0"}`}
+                  icon={AddressBookIcon}
+                  title="View my address book"
                 />
               </Flex>
             </Box>
@@ -69,12 +102,14 @@ const Home: NextPage = () => {
               </Heading>
 
               <Box paddingTop={4}>
-                {rexData.map((rexDetails) => (
-                  <RexInfo
-                    key={rexDetails.date + rexDetails.departureDate}
-                    rexDetails={rexDetails}
-                  />
-                ))}
+                {userData.rexData
+                  .filter((rex) => rex.status !== "APPROVED")
+                  .map((rexDetails) => (
+                    <RexInfo
+                      key={rexDetails.date + rexDetails.departureDate}
+                      rexDetails={rexDetails}
+                    />
+                  ))}
                 <Box width="100%" background="shade" padding={2}>
                   <a>
                     <Text fontSize="sm">
@@ -94,12 +129,14 @@ const Home: NextPage = () => {
               </Heading>
 
               <Box paddingTop={4}>
-                {oldRexData.map((rexDetails) => (
-                  <RexInfo
-                    key={rexDetails.date + rexDetails.departureDate}
-                    rexDetails={rexDetails}
-                  />
-                ))}
+                {userData.rexData
+                  .filter((rex) => rex.status === "APPROVED")
+                  .map((rexDetails) => (
+                    <RexInfo
+                      key={rexDetails.date + rexDetails.departureDate}
+                      rexDetails={rexDetails}
+                    />
+                  ))}
                 <a>
                   <Text fontSize="sm">See all</Text>
                 </a>
@@ -112,37 +149,89 @@ const Home: NextPage = () => {
               <Heading as="h3" fontSize="xl">
                 Quota
               </Heading>
-              <Box paddingTop={4}>
-                <Text fontSize="sm" fontWeight="bold">
-                  Allocated
-                </Text>
-                <Flex flexDirection="row">
-                  <Box>USA FTA Cheddar Cheese</Box>
-                  <Flex flexDirection="column" flexGrow={1}>
-                    <Box></Box>
-                    <FilledBar
-                      paddingX={1}
-                      height={"10px"}
-                      rounded
-                      backgroundColor={"#eee"}
-                      segments={Array(5)
-                        .fill(undefined)
-                        .map((_, i) => ({
-                          color: `hsl(${i * i * i * i * 190}, 80%, 60%)`,
-                          percent: 0.03 * (i + 1),
-                        }))}
-                      type="stack"
-                    />
-                  </Flex>
-                  <Flex flexDirection="column">
-                    <Text fontSize="sm" fontWeight="bold">
-                      400kg remaining
-                    </Text>
-                    <Text fontSize="sm">1000kg total</Text>
-                  </Flex>
-                </Flex>
-              </Box>
-              <Box paddingTop={4}></Box>
+
+              {userData.quotas.length === 0 ? (
+                <Text>Not enrolled in any Quotas</Text>
+              ) : (
+                userData.quotas.map((quota) => {
+                  const { pending, title, total, used, type } = quota;
+
+                  return (
+                    <Box key={quota.title} paddingTop={4}>
+                      <Text fontSize="sm" fontWeight="bold">
+                        {type}
+                      </Text>
+                      <Flex flexDirection="row">
+                        <Box>
+                          <Text fontWeight="bold">{title}</Text>
+                        </Box>
+                        <Flex flexDirection="column" flexGrow={1} paddingX={2}>
+                          <Flex flexDirection="row">
+                            <Box paddingX={1}>{`${used}kg used`}</Box>
+                            {pending > 0 && (
+                              <Box
+                                style={{
+                                  paddingLeft: `${
+                                    (pending / total < 0.8
+                                      ? pending / total
+                                      : 0.8) * 100
+                                  }%`,
+                                }}
+                              >{`${pending}kg pending`}</Box>
+                            )}
+                          </Flex>
+                          <FilledBar
+                            paddingX={1}
+                            height="12px"
+                            rounded
+                            backgroundColor={"#EBEBEB"}
+                            segments={[
+                              { color: "#00558B", percent: used / total },
+                              { color: "#9EE8FF", percent: pending / total },
+                            ]}
+                            type="stack"
+                          />
+                        </Flex>
+                        <Flex flexDirection="column">
+                          <Text fontSize="sm" fontWeight="bold">
+                            {`${total - used - pending}kg remaining`}
+                          </Text>
+                          <Text fontSize="sm">{`${total}kg total`}</Text>
+                        </Flex>
+                      </Flex>
+                    </Box>
+                  );
+                })
+              )}
+            </Box>
+
+            <hr />
+
+            <Box paddingTop={4}>
+              <Heading as="h3" fontSize="xl">
+                Tools and resources
+              </Heading>
+
+              <Flex flexDirection="row" flexWrap="wrap" paddingTop={1}>
+                <QuickActionBox
+                  title="Help me export"
+                  text="Answer a few quick questions to find export info and services specific to your needs."
+                />
+                <QuickActionBox
+                  title="Micor"
+                  text="Check importing country requirements."
+                />
+                <QuickActionBox
+                  title="Insights and updates"
+                  text="Get the latest market insights and changes to importing country requirements. "
+                />
+              </Flex>
+            </Box>
+
+            <hr />
+
+            <Box paddingY={4}>
+              <NeedHelp />
             </Box>
           </Body>
         </Content>

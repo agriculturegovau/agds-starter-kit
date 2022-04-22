@@ -5,8 +5,9 @@ import styled from "@emotion/styled";
 import { FC } from "react";
 
 type QuickActionBoxProps = {
-  Icon?: FC;
-  text: string;
+  icon?: FC;
+  title?: string;
+  text?: string;
   onClick?: () => void;
 };
 
@@ -34,9 +35,10 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 export const QuickActionBox = ({
-  Icon,
+  icon: Icon,
   onClick,
   text,
+  title,
 }: QuickActionBoxProps) => {
   return (
     <BorderedBox flexGrow={1}>
@@ -49,24 +51,39 @@ export const QuickActionBox = ({
         <Flex
           padding={0.5}
           flexDirection="column"
-          justifyContent="space-between"
+          justifyContent="space-around"
           height="100%"
           width="100%"
         >
-          <Box>{Icon && <Icon />}</Box>
-          <Box>
-            {text.split("\n").map((line) => (
-              <Text
-                key={line}
-                as="p"
-                color="action"
-                fontSize="lg"
-                fontWeight="bold"
-              >
-                {line}
-              </Text>
-            ))}
-          </Box>
+          {Icon && (
+            <Box>
+              <Icon />
+            </Box>
+          )}
+          {title && (
+            <Box>
+              {title.split("\n").map((line) => (
+                <Text
+                  key={line}
+                  as="p"
+                  color="action"
+                  fontSize="lg"
+                  fontWeight="bold"
+                >
+                  {title}
+                </Text>
+              ))}
+            </Box>
+          )}
+          {text && (
+            <Box>
+              {text.split("\n").map((line) => (
+                <Text key={line} as="p" fontSize="sm">
+                  {line}
+                </Text>
+              ))}
+            </Box>
+          )}
         </Flex>
       </StyledButton>
     </BorderedBox>
