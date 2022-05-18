@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
 import { AppLayout } from "@components/AppLayout";
@@ -12,51 +12,16 @@ import { NewIcon } from "@components/icons/New";
 import { CopyIcon } from "@components/icons/CopyIcon";
 import { AddressBookIcon } from "@components/icons/AddressBook";
 import { RexInfo } from "@components/RexInfo";
-import { generateRexDetails, RexDetails, rexDetails } from "src/rex";
 import { FilledBar } from "@components/FilledBar";
-import { useState } from "react";
 import { NeedHelp } from "@components/NeedHelp";
+import { dairyUser, UserData } from "src/user";
+import { QuotaInfo } from "@components/QuotaInfo";
 
-const generateMultipleRexData = (num: number, completed?: boolean) =>
-  Array(10)
-    .fill(undefined)
-    .map(() => generateRexDetails(completed));
-
-type UserData = {
-  rexData: Array<RexDetails>;
-  quotas: Array<{
-    title: string;
-    type: "Allocated" | "First come first serve (FCFS)";
-    total: number;
-    used: number;
-    pending: number;
-  }>;
+type DashboardProps = {
+  userData: UserData;
 };
 
-const Home: NextPage = () => {
-  const [userData, setUserData] = useState<UserData>({
-    rexData: [
-      ...generateMultipleRexData(Math.floor(Math.random() * 10) + 5),
-      ...generateMultipleRexData(Math.floor(Math.random() * 8) + 2, true),
-    ],
-    quotas: [
-      {
-        title: "Test Quota 1",
-        type: "Allocated",
-        total: 1000,
-        used: 250,
-        pending: 150,
-      },
-      {
-        title: "Test Quota 2",
-        type: "First come first serve (FCFS)",
-        total: 4500,
-        used: 1500,
-        pending: 0,
-      },
-    ],
-  });
-
+const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
   return (
     <>
       <DocumentTitle title="Home" />
@@ -69,7 +34,7 @@ const Home: NextPage = () => {
                 { label: "Manage my consignments" },
               ]}
             />
-            <Box paddingY={4}>
+            <Box paddingTop={2}>
               <Heading as="h2" fontSize="xxl">
                 Manage my consignments
               </Heading>
@@ -153,55 +118,12 @@ const Home: NextPage = () => {
               {userData.quotas.length === 0 ? (
                 <Text>Not enrolled in any Quotas</Text>
               ) : (
-                userData.quotas.map((quota) => {
-                  const { pending, title, total, used, type } = quota;
-
-                  return (
-                    <Box key={quota.title} paddingTop={4}>
-                      <Text fontSize="sm" fontWeight="bold">
-                        {type}
-                      </Text>
-                      <Flex flexDirection="row">
-                        <Box>
-                          <Text fontWeight="bold">{title}</Text>
-                        </Box>
-                        <Flex flexDirection="column" flexGrow={1} paddingX={2}>
-                          <Flex flexDirection="row">
-                            <Box paddingX={1}>{`${used}kg used`}</Box>
-                            {pending > 0 && (
-                              <Box
-                                style={{
-                                  paddingLeft: `${
-                                    (pending / total < 0.8
-                                      ? pending / total
-                                      : 0.8) * 100
-                                  }%`,
-                                }}
-                              >{`${pending}kg pending`}</Box>
-                            )}
-                          </Flex>
-                          <FilledBar
-                            paddingX={1}
-                            height="12px"
-                            rounded
-                            backgroundColor={"#EBEBEB"}
-                            segments={[
-                              { color: "#00558B", percent: used / total },
-                              { color: "#9EE8FF", percent: pending / total },
-                            ]}
-                            type="stack"
-                          />
-                        </Flex>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm" fontWeight="bold">
-                            {`${total - used - pending}kg remaining`}
-                          </Text>
-                          <Text fontSize="sm">{`${total}kg total`}</Text>
-                        </Flex>
-                      </Flex>
-                    </Box>
-                  );
-                })
+                userData.quotas.map((quota) => (
+                  <QuotaInfo
+                    key={`${quota.destinationCountry}${quota.product}`}
+                    quota={quota}
+                  />
+                ))
               )}
             </Box>
 
@@ -240,4 +162,8 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export const getServerSideProps: GetServerSideProps = async () => {
+  return { props: { userData: dairyUser } };
+};
+
+export default Dashboard;

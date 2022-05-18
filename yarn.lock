@@ -91,6 +91,14 @@
   dependencies:
     focus-trap-react "^8.9.0"
 
+"@ag.ds-next/progress-indicator@latest":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/progress-indicator/-/progress-indicator-5.0.0.tgz#9419cdc9128b779f35a6cc97c1dc21fe8a11379f"
+  integrity sha512-3Pqtg2efFMRvk1/lTnmiXh4QhWE1lapcDmtW5u6Lnz6VesiT3pxOiYAVKYapsvMPxBbC7TtR5hUgEDZMXAKYAw==
+  dependencies:
+    "@reach/auto-id" "^0.16.0"
+    react-spring "^9.4.3"
+
 "@ag.ds-next/search-box@latest":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/search-box/-/search-box-4.0.0.tgz#c3d9ca2a2b54efe1f7a7235505aafac2f8760240"
@@ -1892,7 +1900,7 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-spring@^9.4.4:
+react-spring@^9.4.3, react-spring@^9.4.4:
   version "9.4.4"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.4.4.tgz#0a53440013f97c1ebaa739a24a902487f36a5c1e"
   integrity sha512-VOqilh9DJBsS6Pf550YLhdReS3j9a2AQVh7NcsNtWoxTYIeuErWi6ym0++6bBhQp4yT5xvVvUDaJ8ez8vrFgaw==

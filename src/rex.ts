@@ -6,20 +6,11 @@ export type RexDetails = {
   number: string;
   date: string;
   product: string;
-  exporting: string;
+  destinationCountry: string;
   status: RexStatus;
   certificate: string;
   departureDate: string;
-};
-
-export const rexDetails: RexDetails = {
-  number: "REX0000236026",
-  date: "04/01/2022",
-  product: "Cheddar cheese (FTA)",
-  exporting: "United States",
-  status: "REVIEW",
-  certificate: "7679",
-  departureDate: "13/02/2022",
+  amount: number;
 };
 
 const dairyTypes = [
@@ -64,10 +55,11 @@ export const generateRexDetails = (historical: boolean = false): RexDetails => {
     number: `REX0000${Math.floor(Math.random() * 1000000)}`,
     date,
     product: dairyTypes[Math.floor(Math.random() * dairyTypes.length)],
-    exporting:
+    destinationCountry:
       exportingCountries[Math.floor(Math.random() * exportingCountries.length)],
     status: historical ? "APPROVED" : Math.random() > 0.5 ? "REVIEW" : "DRAFT",
     certificate: `${Math.floor(Math.random() * 9000) + 1000}`,
     departureDate,
+    amount: Math.floor(Math.random() * 900) + 100,
   };
 };

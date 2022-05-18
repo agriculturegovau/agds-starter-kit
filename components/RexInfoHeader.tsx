@@ -3,12 +3,14 @@ import { Text } from "@ag.ds-next/text";
 import styled from "@emotion/styled";
 import { ChevronRightIcon } from "@ag.ds-next/icon";
 import { ClickableBox } from "./ClickableBox";
-import { RexDetails, RexStatus } from "src/rex";
+import { RexDetails } from "src/rex";
 import { Column, Columns } from "@ag.ds-next/columns";
+import Link from "next/link";
+import { RexTag } from "./RexTag";
 
 const HeadingBox = styled(Box)(() => ({
   border: "1px solid",
-  borderColor: "#D3D3D3",
+  borderColor: "#E0E0E0",
 }));
 
 const Chevron = styled(ChevronRightIcon)(() => ({
@@ -18,47 +20,6 @@ const Chevron = styled(ChevronRightIcon)(() => ({
     transform: "rotate(90deg)",
   },
 }));
-
-const TagBox = styled(Box)(({ color }) => {
-  const finalColor = color === "muted" ? "#61696B" : "#0B996C";
-
-  return {
-    textAlign: "center",
-    border: "1px solid",
-    borderColor: finalColor,
-    color: color === "success" ? "#fff" : finalColor,
-    backgroundColor: color === "success" ? finalColor : "#fff",
-  };
-});
-
-const RexTag = (status: RexStatus) => {
-  switch (status) {
-    case "REVIEW":
-      return () => (
-        <>
-          <TagBox padding={0.5} rounded color="action">
-            In Review
-          </TagBox>
-        </>
-      );
-    case "DRAFT":
-      return () => (
-        <>
-          <TagBox padding={0.5} rounded color="muted">
-            Draft
-          </TagBox>
-        </>
-      );
-    case "APPROVED":
-      return () => (
-        <>
-          <TagBox padding={0.5} rounded color="success">
-            Approved
-          </TagBox>
-        </>
-      );
-  }
-};
 
 type RexInfoHeaderProps = {
   isOpen: boolean;
@@ -91,15 +52,9 @@ export function RexInfoHeader({
                 REX Number
               </Text>
               <Text fontSize="sm">
-                <a
-                  href=""
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log("Link Click");
-                  }}
-                >
+                <Link href={`/self-manage/${rexDetails.number}`}>
                   {rexDetails.number}
-                </a>
+                </Link>
               </Text>
             </Flex>
           </Column>
@@ -124,7 +79,7 @@ export function RexInfoHeader({
               <Text fontSize="sm" fontWeight="bold">
                 Exporting to
               </Text>
-              <Text fontSize="sm">{rexDetails.exporting}</Text>
+              <Text fontSize="sm">{rexDetails.destinationCountry}</Text>
             </Flex>
           </Column>
           <Column columnSpan={1} columnEnd={12}>

@@ -6,6 +6,7 @@ import React, { useRef, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { useElementSize, usePrefersReducedMotion } from "@ag.ds-next/core";
 import { RexDetails } from "src/rex";
+import Link from "next/link";
 
 const BodyBox = styled(Box)(() => ({
   border: "1px solid",
@@ -44,11 +45,13 @@ export const RexInfo = ({ rexDetails }: RexInfoProps) => {
       />
       <animated.section style={{ overflow: "hidden", ...style }}>
         <BodyBox ref={ref}>
-          <Flex paddingY={1} height="100%" flexDirection="row">
+        <Flex paddingY={1} height="100%" flexDirection="row">
             <Flex paddingX={6} flexDirection="column">
               <Box paddingY={1}>
                 <Text fontSize="sm" fontWeight="bold">
-                  <a>View Detail</a>
+                  <Link href={`/self-manage/${rexDetails.number}`}>
+                    View Detail
+                  </Link>
                 </Text>
               </Box>
 
@@ -87,7 +90,10 @@ export const RexInfo = ({ rexDetails }: RexInfoProps) => {
               <Flex flexDirection="column" paddingY={1}>
                 {[
                   { label: "Products", value: rexDetails.product },
-                  { label: "Exporting to", value: rexDetails.exporting },
+                  {
+                    label: "Exporting to",
+                    value: rexDetails.destinationCountry,
+                  },
                   {
                     label: "Certificate Number",
                     value: rexDetails.certificate,
