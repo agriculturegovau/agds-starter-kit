@@ -16,6 +16,7 @@ import styled from "@emotion/styled";
 import { RexTag } from "@components/RexTag";
 import { QuotaInfo } from "@components/QuotaInfo";
 import { CertificateCollapsible } from "@components/CertificateCollapsible";
+import { FlowProgress } from "@components/flow-progress/FlowProgress";
 
 type DetailsProps = {
   rexData: RexDetails;
@@ -57,31 +58,37 @@ const Detail: NextPage<DetailsProps> = ({ quotas, rexData }) => {
                 Application progress
               </Heading>
               <Box paddingY={4}>
-                <ProgressIndicator
-                  items={[
+                <FlowProgress
+                  progressItems={[
                     {
-                      label: "Draft",
+                      title: "Draft",
                       status: rexData.status === "DRAFT" ? "doing" : "done",
                     },
                     {
-                      label: "In Progress",
+                      title: "In Progress",
                       status: rexData.status === "DRAFT" ? "todo" : "done",
                     },
                     {
-                      label: "In Review",
+                      title: "In Review",
                       status:
                         rexData.status === "DRAFT"
                           ? "todo"
                           : rexData.status === "REVIEW"
                           ? "doing"
                           : "done",
+                      ...{
+                        detail:
+                          rexData.status === "REVIEW"
+                            ? "The REX has been authorised but there is information pertaining to the certificate that requires review by the department. "
+                            : undefined,
+                      },
                     },
                     {
-                      label: "Certificates Ready",
+                      title: "Certificates Ready",
                       status: rexData.status === "APPROVED" ? "done" : "todo",
                     },
                     {
-                      label: "Completed",
+                      title: "Completed",
                       status: rexData.status === "APPROVED" ? "done" : "todo",
                     },
                   ]}
@@ -160,9 +167,9 @@ const Detail: NextPage<DetailsProps> = ({ quotas, rexData }) => {
 
             <Box paddingY={4}>
               <BottomBorderedBox paddingY={2}>
-              <Heading as="h3" fontSize="xl">
-                Certificate preview
-              </Heading>
+                <Heading as="h3" fontSize="xl">
+                  Certificate preview
+                </Heading>
               </BottomBorderedBox>
               <Box paddingY={2}>
                 <CertificateCollapsible />
