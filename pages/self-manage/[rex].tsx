@@ -171,10 +171,51 @@ const Detail: NextPage<DetailsProps> = ({ quotas, rexData }) => {
                   Certificate preview
                 </Heading>
               </BottomBorderedBox>
-              <Box paddingY={2}>
+              <BottomBorderedBox paddingY={2}>
                 <CertificateCollapsible />
-              </Box>
+              </BottomBorderedBox>
+              <BottomBorderedBox paddingY={2}>
+                <CertificateCollapsible />
+              </BottomBorderedBox>
             </Box>
+
+            <hr />
+
+            <Box paddingY={4}>
+              <Box paddingY={2}>
+                <Heading as="h3" fontSize="xl">
+                  History
+                </Heading>
+              </Box>
+              <Flex flexDirection="row" justifyContent="space-between" padding={2} border rounded>
+                <Flex flexDirection="column">
+                  <Text fontSize="sm" fontWeight="bold">
+                    Status
+                  </Text>
+                  <Text fontSize="sm">Draft</Text>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Text fontSize="sm" fontWeight="bold">
+                    Date
+                  </Text>
+                  <Text fontSize="sm">02/02/2020</Text>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Text fontSize="sm" fontWeight="bold">
+                    User
+                  </Text>
+                  <Text fontSize="sm">John Doe</Text>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Text fontSize="sm" fontWeight="bold">
+                    Application
+                  </Text>
+                  <Text fontSize="sm">Application Edit</Text>
+                </Flex>
+              </Flex>
+            </Box>
+
+            <hr />
 
             <Box paddingY={4}>
               <NeedHelp />

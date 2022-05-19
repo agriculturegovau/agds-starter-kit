@@ -86,7 +86,7 @@ export const CertificateCollapsible = () => {
                   <Text fontSize="sm" fontWeight="bold">
                     Consignee address
                   </Text>
-                  <Text fontSize="sm" paddingY={0.25}>
+                  <Text fontSize="sm" paddingTop={0.5} paddingBottom={0.25}>
                     Address line 1
                   </Text>
                   <Text fontSize="sm" paddingY={0.25}>
@@ -102,8 +102,85 @@ export const CertificateCollapsible = () => {
                   <Text fontSize="sm" fontWeight="bold">
                     Application Number
                   </Text>
-                  <Text fontSize="sm" paddingY={0.5}>12345</Text>
+                  <Text fontSize="sm" paddingY={0.5}>
+                    12345
+                  </Text>
                 </Flex>
+
+                <Flex flexDirection="column" paddingY={1}>
+                  <Text fontSize="sm" fontWeight="bold">
+                    Exporter name
+                  </Text>
+                  <Text fontSize="sm" paddingY={0.5}>
+                    Jill Test
+                  </Text>
+                </Flex>
+
+                <Flex flexDirection="column" paddingY={1}>
+                  <Text fontSize="sm" fontWeight="bold">
+                    Exporter address
+                  </Text>
+                  <Text fontSize="sm" paddingTop={0.5} paddingBottom={0.25}>
+                    123 Test Street
+                  </Text>
+                  <Text fontSize="sm" paddingY={0.25}>
+                    Canberra ACT 2600
+                  </Text>
+                </Flex>
+
+                <Flex flexDirection="column" paddingY={1}>
+                  <Text fontSize="sm" fontWeight="bold">
+                    Date of departue
+                  </Text>
+                  <Text fontSize="sm" paddingY={0.5}>
+                    07 Mar 2022
+                  </Text>
+                </Flex>
+
+                <Flex flexDirection="column" paddingY={1}>
+                  <Text fontSize="sm" fontWeight="bold">
+                    Port of loading
+                  </Text>
+                  <Text fontSize="sm" paddingY={0.5}>
+                    Port A
+                  </Text>
+                </Flex>
+
+                <Flex flexDirection="column" paddingY={1}>
+                  <Text fontSize="sm" fontWeight="bold">
+                    Port of discharge
+                  </Text>
+                  <Text fontSize="sm" paddingY={0.5}>
+                    Port B
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Box paddingX={6}>
+              <hr />
+            </Box>
+            <Flex paddingY={1} flexDirection="row">
+              <Flex flexDirection="column" paddingX={6}>
+                <Text fontSize="sm" fontWeight="bold">
+                  Product details
+                </Text>
+                <Text fontSize="sm" paddingY={2}>
+                  Fill me in with data!
+                </Text>
+              </Flex>
+            </Flex>
+
+            <Box paddingX={6}>
+              <hr />
+            </Box>
+            <Flex paddingY={1} flexDirection="row">
+              <Flex flexDirection="column" paddingX={6}>
+                <Text fontSize="sm" fontWeight="bold">
+                  Decleration
+                </Text>
+                <Text fontSize="sm" paddingY={2}>
+                  
+                </Text>
               </Flex>
             </Flex>
           </BorderBox>
