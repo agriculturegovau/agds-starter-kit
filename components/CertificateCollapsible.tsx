@@ -55,7 +55,7 @@ export const CertificateCollapsible = () => {
               <Flex paddingX={6} flexDirection="column">
                 {["Certificate number", "Date issued", "Place issued"].map(
                   (head) => (
-                    <Flex flexDirection="column" paddingY={0.5}>
+                    <Flex key={head} flexDirection="column" paddingY={0.5}>
                       <Text fontSize="sm" fontWeight="bold">
                         {head}
                       </Text>
@@ -178,9 +178,7 @@ export const CertificateCollapsible = () => {
                 <Text fontSize="sm" fontWeight="bold">
                   Decleration
                 </Text>
-                <Text fontSize="sm" paddingY={2}>
-                  
-                </Text>
+                <Text fontSize="sm" paddingY={2}></Text>
               </Flex>
             </Flex>
           </BorderBox>

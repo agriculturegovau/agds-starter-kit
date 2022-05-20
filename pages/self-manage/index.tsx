@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
 import { AppLayout } from "@components/AppLayout";
@@ -162,7 +162,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   return { props: { userData: dairyUser } };
 };
 

@@ -138,7 +138,7 @@ const Matrix: NextPage = () => {
                       width="10%"
                     ></BorderlessTableHeader>
                     {tableData.headers.map(({ callout, detail, title }) => (
-                      <BorderedTableHeader scope="col" width="30%">
+                      <BorderedTableHeader key={title} scope="col" width="33%">
                         <CentreTextFlex
                           paddingX={1}
                           flexDirection="column"
@@ -163,7 +163,7 @@ const Matrix: NextPage = () => {
                 </BorderlessTableHead>
                 <TableBody>
                   {tableData.body.map((row) => (
-                    <tr>
+                    <tr key={row.join("")}>
                       {row.map((cell, cellIndex) =>
                         cellIndex === 0 ? (
                           <BorderlessTableCell textAlign="left">
@@ -175,7 +175,7 @@ const Matrix: NextPage = () => {
                           <TableCell textAlign="center">
                             <Box paddingX={2} paddingBottom={2}>
                               {cell.split("\n").map((line) => (
-                                <ParagraphBox>
+                                <ParagraphBox key={line}>
                                   <Text
                                     paddingTop={1}
                                     color="text"

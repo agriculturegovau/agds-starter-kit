@@ -1,4 +1,9 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetStaticProps,
+  NextPage,
+  GetStaticPaths,
+} from "next";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
 import { AppLayout } from "@components/AppLayout";
@@ -187,7 +192,13 @@ const Detail: NextPage<DetailsProps> = ({ quotas, rexData }) => {
                   History
                 </Heading>
               </Box>
-              <Flex flexDirection="row" justifyContent="space-between" padding={2} border rounded>
+              <Flex
+                flexDirection="row"
+                justifyContent="space-between"
+                padding={2}
+                border
+                rounded
+              >
                 <Flex flexDirection="column">
                   <Text fontSize="sm" fontWeight="bold">
                     Status
@@ -227,8 +238,18 @@ const Detail: NextPage<DetailsProps> = ({ quotas, rexData }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { rex } = query;
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: dairyUser.rexData.map(({ number }) => ({ params: { rex: number } })),
+  fallback: false, // See the "fallback" section below
+});
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) {
+    return {
+      notFound: true,
+    };
+  }
+  const rex = Array.isArray(params["rex"]) ? params["rex"][0] : params["rex"];
 
   if (!rex || Array.isArray(rex)) {
     return {

@@ -14,7 +14,7 @@ const Home: NextPage = () => {
             <h1>Sample Page</h1>
             <p>
               This is a sample page using the AG Design System. It&apos;s a good
-              place to play around with concepts if you don't want to spin up a
+              place to play around with concepts if you don&apos;t want to spin up a
               new page.
             </p>
           </Body>

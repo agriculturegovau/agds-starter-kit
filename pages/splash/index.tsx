@@ -7,7 +7,6 @@ import { DocumentTitle } from "@components/DocumentTitle";
 import { Box, Flex } from "@ag.ds-next/box";
 import styled from "@emotion/styled";
 import { Heading } from "@ag.ds-next/heading";
-import Image from "next/image";
 
 const RightImage = styled.img`
   float: right;
@@ -56,7 +55,7 @@ const Home: NextPage = () => {
             alignItems="flex-start"
           >
             <AbsoluteDiv>
-              <ImageFader src="/images/cargo.png" height="500px" />
+              <ImageFader src="/images/cargo.png" height="500px" alt="" />
             </AbsoluteDiv>
             <AbsoluteDiv style={{ top: "-500px" }}>
               <Content>
@@ -88,7 +87,7 @@ const Home: NextPage = () => {
             <Box paddingY={sectionPadding}>
               <Flex flexDirection="row" justifyContent="space-around">
                 <Box>
-                  <img src="/images/consignments.png" />
+                  <img src="/images/consignments.png" alt="" />
                 </Box>
                 <Box paddingLeft={5}>
                   <Section
@@ -119,10 +118,7 @@ const Home: NextPage = () => {
         <Box>
           <Content>
             <BottomFlex alignItems="flex-end">
-              <Flex
-                alignItems="center"
-                flexDirection="column"
-              >
+              <Flex alignItems="center" flexDirection="column">
                 <Box paddingY={sectionPadding}>
                   <Flex flexDirection="column" justifyContent="flex-start">
                     <Section
@@ -163,12 +159,16 @@ const Home: NextPage = () => {
                   </Flex>
                 </Box>
               </Flex>
-              <Box width="200%" display={{md: "none", lg: "block"}}>
-                <Image
+              <Box width="200%" display={{ md: "none", lg: "block" }}>
+                <img
                   src="/images/exportApp.png"
-                  layout="responsive"
+                  // This is only used with next/Image, but we're (currently) exporting to a static site
+                  // so we can't use it.
+                  // Also, We're not actually using this page anymore, so ¯\_(ツ)_/¯
+                  // layout="responsive"
                   width="1272"
                   height="1862"
+                  alt=""
                 />
               </Box>
             </BottomFlex>
