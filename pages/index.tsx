@@ -39,10 +39,10 @@ const Main = styled.main`
 `;
 
 const prototypes = [
-  { url: "sample", label: "Sample" },
-  { url: "splash", label: "Splash Page" },
-  { url: "matrix", label: "Options Matrix" },
   { url: "self-manage", label: "Self Manage Portal" },
+  // { url: "sample", label: "Sample" },
+  // { url: "splash", label: "Splash Page" },
+  // { url: "matrix", label: "Options Matrix" },
 ];
 
 const Home: NextPage = () => (
