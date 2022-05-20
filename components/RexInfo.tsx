@@ -49,7 +49,7 @@ export const RexInfo = ({ rexDetails }: RexInfoProps) => {
             <Flex paddingX={6} flexDirection="column">
               <Box paddingY={1}>
                 <Text fontSize="sm" fontWeight="bold">
-                  <Link href={`/self-manage/${rexDetails.number}`}>
+                  <Link href={`self-manage/${rexDetails.number}`}>
                     View Detail
                   </Link>
                 </Text>

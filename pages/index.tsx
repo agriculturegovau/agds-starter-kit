@@ -74,7 +74,7 @@ const Home: NextPage = () => (
 
         <Stack color="text" gap={2} paddingTop={3} flexDirection="column">
           {prototypes.map(({ label, url }) => (
-            <TextLink key={url} href={`/${url}`}>
+            <TextLink key={url} href={`${url}`}>
               {label}
             </TextLink>
           ))}
