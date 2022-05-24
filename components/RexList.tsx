@@ -166,7 +166,7 @@ export const RexList = ({
           <hr />
         </>
       )}
-      <ShadowBox paddingY={4}>
+      <ShadowBox paddingY={1}>
         <Box
           background={"shade"}
           paddingX={1.5}

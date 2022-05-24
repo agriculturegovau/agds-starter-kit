@@ -1,23 +1,21 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import { Body } from "@ag.ds-next/body";
 import { Content } from "@ag.ds-next/content";
 import { AppLayout } from "@components/AppLayout";
 import { DocumentTitle } from "@components/DocumentTitle";
 import { Box, Flex } from "@ag.ds-next/box";
-import { Text } from "@ag.ds-next/text";
 import { Heading } from "@ag.ds-next/heading";
 import { Breadcrumbs } from "@ag.ds-next/breadcrumbs";
 import { QuickActionBox } from "@components/QuickActionBox";
 import { NewIcon } from "@components/icons/New";
 import { CopyIcon } from "@components/icons/CopyIcon";
-import { AddressBookIcon } from "@components/icons/AddressBook";
-import { RexInfo } from "@components/RexInfo";
-import { FilledBar } from "@components/FilledBar";
+import { Text } from "@ag.ds-next/text";
 import { NeedHelp } from "@components/NeedHelp";
 import { dairyUser, UserData } from "src/user";
-import { QuotaInfo } from "@components/QuotaInfo";
 import Link from "next/link";
 import { RexList } from "@components/RexList";
+import { Button } from "@ag.ds-next/button";
+import { WorldIcon } from "@components/icons/World";
 
 type DashboardProps = {
   userData: UserData;
@@ -38,25 +36,119 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
             />
             <Box paddingTop={2}>
               <Heading as="h2" fontSize="xxl">
-                Manage my consignments
+                Consignments
               </Heading>
             </Box>
+
             <Box paddingY={4}>
               <Heading as="h3" fontSize="xl">
-                Quick actions
+                Application Summary
+              </Heading>
+              <Flex
+                padding={1}
+                background="shade"
+                flexDirection="row"
+                style={{ marginTop: "24px" }}
+              >
+                <Flex
+                  background="body"
+                  flexGrow={1}
+                  flexDirection="column"
+                  padding={1}
+                  alignItems="flex-start"
+                  style={{ margin: "12px" }}
+                >
+                  <Text fontSize="lg" fontWeight="bold">
+                    {
+                      userData.rexData.filter((rex) => rex.status === "DRAFT")
+                        .length
+                    }
+                  </Text>
+                  <Text fontSize="md">In draft</Text>
+                  <Button size="sm" variant="tertiary">
+                    View
+                  </Button>
+                </Flex>
+
+                <Flex
+                  background="body"
+                  flexGrow={1}
+                  flexDirection="column"
+                  padding={1}
+                  alignItems="flex-start"
+                  style={{ margin: "12px" }}
+                >
+                  <Text fontSize="lg" fontWeight="bold">
+                    {
+                      userData.rexData.filter((rex) => rex.status === "REVIEW")
+                        .length
+                    }
+                  </Text>
+                  <Text fontSize="md">In review</Text>
+                  <Button size="sm" variant="tertiary">
+                    View
+                  </Button>
+                </Flex>
+
+                <Flex
+                  background="body"
+                  flexGrow={1}
+                  flexDirection="column"
+                  padding={1}
+                  alignItems="flex-start"
+                  style={{ margin: "12px" }}
+                >
+                  <Text fontSize="lg" fontWeight="bold">
+                    0
+                  </Text>
+                  <Text fontSize="md">On hold</Text>
+                  <Button size="sm" variant="tertiary">
+                    View
+                  </Button>
+                </Flex>
+
+                <Flex
+                  background="body"
+                  flexGrow={1}
+                  flexDirection="column"
+                  padding={1}
+                  alignItems="flex-start"
+                  style={{ margin: "12px" }}
+                >
+                  <Text fontSize="lg" fontWeight="bold">
+                    {
+                      userData.rexData.filter(
+                        (rex) => rex.status === "APPROVED"
+                      ).length
+                    }
+                  </Text>
+                  <Text fontSize="md">Ready to print</Text>
+                  <Button size="sm" variant="tertiary">
+                    View
+                  </Button>
+                </Flex>
+              </Flex>
+            </Box>
+
+            <hr />
+
+            <Box paddingY={4}>
+              <Heading as="h3" fontSize="xl">
+                Quick links
               </Heading>
               <Flex flexDirection="row" flexWrap="wrap" paddingTop={1}>
                 <QuickActionBox
                   icon={NewIcon}
-                  title="Make a new request to export application"
+                  title="Apply for export documentation"
                 />
                 <QuickActionBox
                   icon={CopyIcon}
                   title="Copy a previous export application"
                 />
                 <QuickActionBox
-                  icon={AddressBookIcon}
-                  title="View my address book"
+                  icon={WorldIcon}
+                  title="Manual of Importing Country Requirements"
+                  external
                 />
               </Flex>
             </Box>
@@ -69,20 +161,24 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
               </Heading>
 
               <Box paddingTop={4}>
-                <RexList rexDetails={userData.rexData} limit={5} preSelectedStatuses={["DRAFT", "REVIEW"]} />
+                <RexList
+                  rexDetails={userData.rexData}
+                  limit={5}
+                  preSelectedStatuses={["DRAFT", "REVIEW"]}
+                />
 
-                <Link href="self-manage/consignments/">
-                  <Text fontSize="sm" color="action">
-                    See all
-                  </Text>
-                </Link>
-                <Box width="100%" background="shade" padding={2}>
-                  <a>
-                    <Text fontSize="sm">
+                <Flex justifyContent="space-between">
+                  <Link href="self-manage/consignments/">
+                    <Button size="sm" variant="tertiary">
+                      See all
+                    </Button>
+                  </Link>
+                  <Link href="/">
+                    <Button variant="secondary">
                       + New request for export application
-                    </Text>
-                  </a>
-                </Box>
+                    </Button>
+                  </Link>
+                </Flex>
               </Box>
             </Box>
 
@@ -92,33 +188,17 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
               </Heading>
 
               <Box paddingTop={4}>
-                
-              <RexList rexDetails={userData.rexData} limit={5} preSelectedStatuses={["APPROVED"]} />
+                <RexList
+                  rexDetails={userData.rexData}
+                  limit={5}
+                  preSelectedStatuses={["APPROVED"]}
+                />
                 <Link href="self-manage/consignments/">
-                  <Text fontSize="sm" color="action">
+                  <Button size="sm" variant="tertiary">
                     See all
-                  </Text>
+                  </Button>
                 </Link>
               </Box>
-            </Box>
-
-            <hr />
-
-            <Box paddingY={4}>
-              <Heading as="h3" fontSize="xl">
-                Quota
-              </Heading>
-
-              {userData.quotas.length === 0 ? (
-                <Text>Not enrolled in any Quotas</Text>
-              ) : (
-                userData.quotas.map((quota) => (
-                  <QuotaInfo
-                    key={`${quota.destinationCountry}${quota.product}`}
-                    quota={quota}
-                  />
-                ))
-              )}
             </Box>
 
             <hr />

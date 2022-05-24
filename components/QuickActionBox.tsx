@@ -3,19 +3,20 @@ import { Button } from "@ag.ds-next/button";
 import { Text } from "@ag.ds-next/text";
 import styled from "@emotion/styled";
 import { FC } from "react";
+import { ExternalLinkIcon } from "@ag.ds-next/icon";
 
 type QuickActionBoxProps = {
   icon?: FC;
   title?: string;
   text?: string;
   onClick?: () => void;
+  external?: boolean;
 };
 
 const BorderedBox = styled(Box)(() => ({
   border: "1px solid",
   borderRadius: "4px",
   margin: "0.5rem",
-  height: "180px",
   minWidth: "200px",
   maxWidth: "360px",
   boxShadow: "0px 2px 4px 0px #0000004D",
@@ -34,7 +35,13 @@ const StyledButton = styled(Button)(() => ({
   padding: 0,
 }));
 
+const FloatingIcon = styled(Box)(() => ({
+  position: "relative",
+  top: "-35%",
+}));
+
 export const QuickActionBox = ({
+  external,
   icon: Icon,
   onClick,
   text,
@@ -50,7 +57,7 @@ export const QuickActionBox = ({
       >
         <Flex
           padding={0.5}
-          flexDirection="column"
+          flexDirection="row"
           justifyContent="space-around"
           height="100%"
           width="100%"
@@ -61,18 +68,10 @@ export const QuickActionBox = ({
             </Box>
           )}
           {title && (
-            <Box>
-              {title.split("\n").map((line) => (
-                <Text
-                  key={line}
-                  as="p"
-                  color="action"
-                  fontSize="lg"
-                  fontWeight="bold"
-                >
-                  {title}
-                </Text>
-              ))}
+            <Box flexGrow={1.5} paddingLeft={1}>
+              <Text as="p" fontSize="md" color="action" fontWeight="bold">
+                {title}
+              </Text>
             </Box>
           )}
           {text && (
@@ -85,6 +84,11 @@ export const QuickActionBox = ({
             </Box>
           )}
         </Flex>
+        {external && (
+          <FloatingIcon>
+            <ExternalLinkIcon size="sm" />
+          </FloatingIcon>
+        )}
       </StyledButton>
     </BorderedBox>
   );
