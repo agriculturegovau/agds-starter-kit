@@ -12,6 +12,7 @@ import { dairyUser, UserData } from "src/user";
 type ConsignmentProps = {
   userData: UserData;
 };
+//Current consignment applications
 
 const Consignments: NextPage<ConsignmentProps> = ({ userData }) => {
   return (
@@ -30,7 +31,16 @@ const Consignments: NextPage<ConsignmentProps> = ({ userData }) => {
             </Box>
 
             <Box paddingY={4}>
-              <RexList rexDetails={userData.rexData} />
+              <Heading as="h3" fontSize="xl">
+                Current consignment applications
+              </Heading>
+              <Box paddingTop={2}>
+                <RexList
+                  rexDetails={userData.rexData}
+                  showFiltersSection
+                  showPaginationSection
+                />
+              </Box>
             </Box>
           </Body>
         </Content>

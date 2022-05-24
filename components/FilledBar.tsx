@@ -52,7 +52,6 @@ export const FilledBar = ({
     } else {
       const modBars = segments
         .filter((bar) => {
-          console.log(bar.percent);
           return bar.percent > 0;
         })
         .map((bar, index) => {
@@ -65,7 +64,6 @@ export const FilledBar = ({
           }, 0);
           return newBar;
         });
-      console.log({ segments, modBars });
 
       setInnerBars(modBars.sort((a, b) => b.percent - a.percent));
     }

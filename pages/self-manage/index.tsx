@@ -17,6 +17,7 @@ import { NeedHelp } from "@components/NeedHelp";
 import { dairyUser, UserData } from "src/user";
 import { QuotaInfo } from "@components/QuotaInfo";
 import Link from "next/link";
+import { RexList } from "@components/RexList";
 
 type DashboardProps = {
   userData: UserData;
@@ -68,14 +69,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
               </Heading>
 
               <Box paddingTop={4}>
-                {userData.rexData
-                  .filter((rex) => rex.status !== "APPROVED")
-                  .map((rexDetails) => (
-                    <RexInfo
-                      key={rexDetails.date + rexDetails.departureDate}
-                      rexDetails={rexDetails}
-                    />
-                  ))}
+                <RexList rexDetails={userData.rexData} limit={5} preSelectedStatuses={["DRAFT", "REVIEW"]} />
 
                 <Link href="self-manage/consignments/">
                   <Text fontSize="sm" color="action">
@@ -98,14 +92,8 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
               </Heading>
 
               <Box paddingTop={4}>
-                {userData.rexData
-                  .filter((rex) => rex.status === "APPROVED")
-                  .map((rexDetails) => (
-                    <RexInfo
-                      key={rexDetails.date + rexDetails.departureDate}
-                      rexDetails={rexDetails}
-                    />
-                  ))}
+                
+              <RexList rexDetails={userData.rexData} limit={5} preSelectedStatuses={["APPROVED"]} />
                 <Link href="self-manage/consignments/">
                   <Text fontSize="sm" color="action">
                     See all
