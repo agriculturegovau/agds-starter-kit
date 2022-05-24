@@ -16,6 +16,7 @@ import { FilledBar } from "@components/FilledBar";
 import { NeedHelp } from "@components/NeedHelp";
 import { dairyUser, UserData } from "src/user";
 import { QuotaInfo } from "@components/QuotaInfo";
+import Link from "next/link";
 
 type DashboardProps = {
   userData: UserData;
@@ -75,6 +76,12 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                       rexDetails={rexDetails}
                     />
                   ))}
+
+                <Link href="self-manage/consignments/">
+                  <Text fontSize="sm" color="action">
+                    See all
+                  </Text>
+                </Link>
                 <Box width="100%" background="shade" padding={2}>
                   <a>
                     <Text fontSize="sm">
@@ -82,9 +89,6 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     </Text>
                   </a>
                 </Box>
-                <a>
-                  <Text fontSize="sm">See all</Text>
-                </a>
               </Box>
             </Box>
 
@@ -102,9 +106,11 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                       rexDetails={rexDetails}
                     />
                   ))}
-                <a>
-                  <Text fontSize="sm">See all</Text>
-                </a>
+                <Link href="self-manage/consignments/">
+                  <Text fontSize="sm" color="action">
+                    See all
+                  </Text>
+                </Link>
               </Box>
             </Box>
 

@@ -52,7 +52,7 @@ export function RexInfoHeader({
                 REX Number
               </Text>
               <Text fontSize="sm">
-                <Link href={`self-manage/${rexDetails.number}`}>
+                <Link href={`self-manage/consignments/${rexDetails.number}`}>
                   {rexDetails.number}
                 </Link>
               </Text>

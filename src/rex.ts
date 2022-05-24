@@ -1,6 +1,7 @@
 import { addDays, format } from "date-fns";
 
 export type RexStatus = "REVIEW" | "DRAFT" | "APPROVED";
+export const rexStatuses: Array<RexStatus> = ["REVIEW", "DRAFT", "APPROVED"];
 
 export type RexDetails = {
   number: string;

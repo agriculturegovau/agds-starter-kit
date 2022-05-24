@@ -106,6 +106,11 @@
   dependencies:
     "@reach/auto-id" "^0.16.0"
 
+"@ag.ds-next/select@latest":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/select/-/select-7.0.0.tgz#cc5690ed842bcf4d210d038c215948f56fdeb5a1"
+  integrity sha512-/fNY/tOUj7efYNfW7Eg3t2Yg8/uaRViqLPhpR0fWjh0e/cgu0AhEx6w+P+o2HneagwAODxhr77S3U57fld/mXA==
+
 "@ag.ds-next/skip-link@latest":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/skip-link/-/skip-link-1.0.3.tgz#57f7b57f95ea5bbbe2379ed563d0a4279d90c521"
