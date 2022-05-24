@@ -211,7 +211,7 @@ export const RexList = ({
               <Columns columnGap={0.5}>
                 <Column columnSpan={2}>
                   <Box>
-                    <Link href={`consignments/${rex.number}`}>
+                    <Link href={`./self-manage/consignments/${rex.number}`}>
                       {rex.number}
                     </Link>
                   </Box>
