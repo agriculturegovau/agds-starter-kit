@@ -203,29 +203,6 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
 
             <hr />
 
-            <Box paddingTop={4}>
-              <Heading as="h3" fontSize="xl">
-                Tools and resources
-              </Heading>
-
-              <Flex flexDirection="row" flexWrap="wrap" paddingTop={1}>
-                <QuickActionBox
-                  title="Help me export"
-                  text="Answer a few quick questions to find export info and services specific to your needs."
-                />
-                <QuickActionBox
-                  title="Micor"
-                  text="Check importing country requirements."
-                />
-                <QuickActionBox
-                  title="Insights and updates"
-                  text="Get the latest market insights and changes to importing country requirements. "
-                />
-              </Flex>
-            </Box>
-
-            <hr />
-
             <Box paddingY={4}>
               <NeedHelp />
             </Box>
