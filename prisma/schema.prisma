@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model DairyProduct {
+  id            Int    @id @default(autoincrement())
+  productId     Int    @unique
+  value         String
+  label         String
+  commodityType String
+}
+
+model Ahecc {
+  id    Int    @id @default(autoincrement())
+  value String
+  label String
+}
+
+model PackType {
+  id    Int    @id @default(autoincrement())
+  value String
+  label String
+}
+
+model Country {
+  id    Int    @id @default(autoincrement())
+  value String
+  label String
+}
+
+model ProductCategory {
+  id    Int    @id @default(autoincrement())
+  value String
+  label String
+}
