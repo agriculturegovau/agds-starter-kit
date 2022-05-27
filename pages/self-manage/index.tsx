@@ -31,7 +31,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
             <Breadcrumbs
               links={[
                 { href: "/", label: "Home" },
-                { label: "Manage my consignments" },
+                { label: "Consignments" },
               ]}
             />
             <Box paddingTop={2}>
@@ -65,9 +65,11 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">In draft</Text>
-                  <Button size="sm" variant="tertiary">
-                    View
-                  </Button>
+                  <Link href="./self-manage/consignments?status=DRAFT">
+                    <Button size="sm" variant="tertiary">
+                      View
+                    </Button>
+                  </Link>
                 </Flex>
 
                 <Flex
@@ -85,9 +87,11 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">In review</Text>
-                  <Button size="sm" variant="tertiary">
-                    View
-                  </Button>
+                  <Link href="./self-manage/consignments?status=REVIEW">
+                    <Button size="sm" variant="tertiary">
+                      View
+                    </Button>
+                  </Link>
                 </Flex>
 
                 <Flex
@@ -123,9 +127,11 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">Ready to print</Text>
-                  <Button size="sm" variant="tertiary">
-                    View
-                  </Button>
+                  <Link href="./self-manage/consignments?status=APPROVED">
+                    <Button size="sm" variant="tertiary">
+                      View
+                    </Button>
+                  </Link>
                 </Flex>
               </Flex>
             </Box>
@@ -136,7 +142,12 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
               <Heading as="h3" fontSize="xl">
                 Quick links
               </Heading>
-              <Flex flexDirection="row" flexWrap="wrap" paddingTop={1}>
+              <Flex
+                flexDirection="row"
+                flexWrap="wrap"
+                justifyContent="space-between"
+                paddingTop={1}
+              >
                 <QuickActionBox
                   icon={NewIcon}
                   title="Apply for export documentation"

@@ -8,6 +8,8 @@ import { DocumentTitle } from "@components/DocumentTitle";
 import { RexList } from "@components/RexList";
 import { GetStaticProps, NextPage } from "next";
 import { dairyUser, UserData } from "src/user";
+import { useRouter } from "next/router";
+import { RexStatus } from "src/rex";
 
 type ConsignmentProps = {
   userData: UserData;
@@ -15,6 +17,14 @@ type ConsignmentProps = {
 //Current consignment applications
 
 const Consignments: NextPage<ConsignmentProps> = ({ userData }) => {
+  const { query } = useRouter();
+
+  const status = query.status ? query.status : [];
+  //@ts-ignore
+  const selectedStatus = (
+    Array.isArray(status) ? status : [status]
+  ) as Array<RexStatus>;
+
   return (
     <>
       <DocumentTitle title="Home" />
@@ -22,7 +32,11 @@ const Consignments: NextPage<ConsignmentProps> = ({ userData }) => {
         <Content>
           <Body>
             <Breadcrumbs
-              links={[{ href: "/", label: "Home" }, { label: "Consignments" }]}
+              links={[
+                { href: "/", label: "Home" },
+                { href: "/self-manage", label: "Consignments" },
+                { label: "Consignments list" },
+              ]}
             />
             <Box paddingTop={2}>
               <Heading as="h2" fontSize="xxl">
@@ -37,6 +51,7 @@ const Consignments: NextPage<ConsignmentProps> = ({ userData }) => {
               <Box paddingTop={2}>
                 <RexList
                   rexDetails={userData.rexData}
+                  preSelectedStatuses={selectedStatus}
                   showFiltersSection
                   showPaginationSection
                 />
