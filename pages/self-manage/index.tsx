@@ -16,12 +16,15 @@ import Link from "next/link";
 import { RexList } from "@components/RexList";
 import { Button } from "@ag.ds-next/button";
 import { WorldIcon } from "@components/icons/World";
+import { useRouter } from "next/router";
 
 type DashboardProps = {
   userData: UserData;
 };
 
 const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
+  const router = useRouter();
+
   return (
     <>
       <DocumentTitle title="Home" />
@@ -29,10 +32,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
         <Content>
           <Body>
             <Breadcrumbs
-              links={[
-                { href: "/", label: "Home" },
-                { label: "Consignments" },
-              ]}
+              links={[{ href: "/", label: "Home" }, { label: "Consignments" }]}
             />
             <Box paddingTop={2}>
               <Heading as="h2" fontSize="xxl">
@@ -151,6 +151,9 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                 <QuickActionBox
                   icon={NewIcon}
                   title="Apply for export documentation"
+                  onClick={() => {
+                    router.push("/self-manage/consignments/new");
+                  }}
                 />
                 <QuickActionBox
                   icon={CopyIcon}

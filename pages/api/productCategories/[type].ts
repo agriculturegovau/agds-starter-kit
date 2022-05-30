@@ -30,12 +30,12 @@ export default async function handler(
   }
 
   const prisma = new PrismaClient();
-  const packType = await prisma.packType.findMany({
+  const productCategory = await prisma.productCategory.findMany({
     where: {
       value: {
         startsWith: type,
       },
     },
   });
-  res.status(200).json(packType);
+  res.status(200).json(productCategory);
 }

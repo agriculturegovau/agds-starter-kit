@@ -11,8 +11,8 @@ import { AppLayout } from "@components/AppLayout";
 import { DocumentTitle } from "@components/DocumentTitle";
 import Link from "next/link";
 import { useState } from "react";
+import { SupportedCommodities } from "src/rexApplication";
 
-type SupportedCommodities = "dairy" | "honey";
 
 type RexFormFields = {
   commodity: SupportedCommodities | "";

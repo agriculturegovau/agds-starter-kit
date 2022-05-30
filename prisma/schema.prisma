@@ -10,6 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CommodityTypes {
+  DAIRY
+  HONEY
+}
+
+model Rex {
+  id                String         @id @default(cuid())
+  commodityType     CommodityTypes
+  usesQuota         Boolean        @default(false)
+  usesImportedDairy Boolean        @default(false)
+  exportCountry     Country        @relation(fields: [countryId], references: [id])
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  countryId         Int
+}
+
 model DairyProduct {
   id            Int    @id @default(autoincrement())
   productId     Int    @unique
@@ -34,6 +50,7 @@ model Country {
   id    Int    @id @default(autoincrement())
   value String
   label String
+  Rex   Rex[]
 }
 
 model ProductCategory {
