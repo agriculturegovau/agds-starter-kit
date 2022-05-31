@@ -28,22 +28,22 @@ enum CertificateStatus {
 }
 
 model Rex {
-  id            Int            @id @default(autoincrement())
-  rexNumber     String         @unique
-  clientRef     String
-  commodityType CommodityTypes
-  rexStatus     RexStatus
+  id            Int             @id @default(autoincrement())
+  rexNumber     String          @unique
+  clientRef     String?
+  commodityType CommodityTypes?
+  rexStatus     RexStatus       @default(DRAFT)
   products      Product[]
-  exportCountry Country        @relation(fields: [countryId], references: [id])
-  consignee     String
-  certificate   Certificate?   @relation(fields: [certificateId], references: [id])
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  exportCountry Country?        @relation(fields: [countryId], references: [id])
+  consignee     String?
+  certificate   Certificate?    @relation(fields: [certificateId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   history       History[]
-  dairyOptions  DairyOptions?  @relation(fields: [dairyOptionsId], references: [id])
+  dairyOptions  DairyOptions?   @relation(fields: [dairyOptionsId], references: [id])
 
-  countryId      Int
-  dairyOptionsId Int
+  countryId      Int?
+  dairyOptionsId Int?
   certificateId  Int?
 }
 
@@ -51,7 +51,7 @@ model DairyOptions {
   id                Int     @id @default(autoincrement())
   usesQuota         Boolean @default(false)
   usesImportedDairy Boolean @default(false)
-  Rex               Rex[]
+  Rex               Rex?
 }
 
 model Product {
@@ -83,7 +83,7 @@ model Certificate {
   portOfLoading     String
   portOfDischarge   String
   declaration       String
-  Rex               Rex[]
+  Rex               Rex?
 }
 
 model History {

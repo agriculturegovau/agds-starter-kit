@@ -2,39 +2,44 @@ import { Body } from "@ag.ds-next/body";
 import { Box, Flex } from "@ag.ds-next/box";
 import { Breadcrumbs } from "@ag.ds-next/breadcrumbs";
 import { Button } from "@ag.ds-next/button";
-import { Checkbox, ControlGroup } from "@ag.ds-next/control-input";
 import { Content } from "@ag.ds-next/content";
+import { ControlGroup, Checkbox } from "@ag.ds-next/control-input";
 import { Heading } from "@ag.ds-next/heading";
 import { Select } from "@ag.ds-next/select";
 import { Text } from "@ag.ds-next/text";
 import { AppLayout } from "@components/AppLayout";
 import { DocumentTitle } from "@components/DocumentTitle";
+import { CommodityTypes, Rex } from "@prisma/client";
+import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
-import { SupportedCommodities } from "src/rexApplication";
-
-
-type RexFormFields = {
-  commodity: SupportedCommodities | "";
-  usesQuota: boolean;
-  usesImportedDairy: boolean;
-};
-
-const initRexFormFields: RexFormFields = {
-  commodity: "dairy",
-  usesQuota: false,
-  usesImportedDairy: false,
-};
+import { useEffect, useState } from "react";
 
 const NewConsignment = () => {
-  const [form, setForm] = useState(initRexFormFields);
+  const [selectedCommodity, setSelectedCommodity] = useState<CommodityTypes>();
+  const [usesQuota, setUsesQuota] = useState(false);
+  const [usesImportedDairy, setUsesImportedDairy] = useState(false);
 
-  const updateForm =
-    (field: keyof RexFormFields) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setForm({ ...form, [field]: event.target.checked });
-    };
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (loading && selectedCommodity !== undefined) {
+      axios
+        .post<Rex>("/api/rex", {
+          commodityType: selectedCommodity,
+          ...(selectedCommodity === "DAIRY"
+            ? {
+                dairyOptions: {
+                  usesQuota,
+                  usesImportedDairy,
+                },
+              }
+            : {}),
+        })
+        .then((res) => {
+          //   TODO: go to main form page
+        });
+    }
+  }, [loading]);
   return (
     <>
       <DocumentTitle title="Home" />
@@ -70,46 +75,32 @@ const NewConsignment = () => {
                   label="Commodity type of your export"
                   required
                   placeholder=" "
-                  value={form.commodity}
-                  onChange={(e) =>
-                    setForm((prevState) => {
-                      //@ts-ignore
-                      const newCommodity = e.target
-                        .value as SupportedCommodities;
-                      return {
-                        ...prevState,
-                        commodity: newCommodity,
-                      };
-                    })
-                  }
+                  value={selectedCommodity}
+                  onChange={(e) => {
+                    //@ts-ignore
+                    const newCommodity = e.target.value as CommodityTypes;
+                    setSelectedCommodity(newCommodity);
+                  }}
                   options={[
-                    { label: "Dairy", value: "dairy" },
-                    { label: "Honey", value: "honey" },
+                    { label: "Dairy", value: CommodityTypes.DAIRY },
+                    { label: "Honey", value: CommodityTypes.HONEY },
                   ]}
                 />
               </Box>
-              {form.commodity === "dairy" && (
+              {selectedCommodity === "DAIRY" && (
                 <Flex paddingTop={2} flexDirection="column">
                   <Text fontWeight="bold">Select all that apply</Text>
                   <ControlGroup block>
                     <Checkbox
-                      checked={form.usesQuota}
-                      onChange={() =>
-                        setForm((prevState) => ({
-                          ...prevState,
-                          usesQuota: !prevState.usesQuota,
-                        }))
-                      }
+                      checked={usesQuota}
+                      onChange={() => setUsesQuota((prevState) => !prevState)}
                     >
                       Quota applies to this application
                     </Checkbox>
                     <Checkbox
-                      checked={form.usesImportedDairy}
+                      checked={usesImportedDairy}
                       onChange={() =>
-                        setForm((prevState) => ({
-                          ...prevState,
-                          usesImportedDairy: !prevState.usesImportedDairy,
-                        }))
+                        setUsesImportedDairy((prevState) => !prevState)
                       }
                     >
                       The products in this application contain imported dairy
@@ -118,10 +109,19 @@ const NewConsignment = () => {
                   </ControlGroup>
                 </Flex>
               )}
+
               <Box paddingTop={2}>
-                <Button disabled={form.commodity === ""}>Start</Button>
+                <Button
+                  onClick={() => {
+                    setLoading(true);
+                  }}
+                  loading={loading}
+                  disabled={selectedCommodity === undefined || loading}
+                >
+                  Start
+                </Button>
               </Box>
-            </Box>  
+            </Box>
           </Body>
         </Content>
       </AppLayout>

@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ProductCategory, CommodityTypes, PrismaClient } from "@prisma/client";
+import { ProductItem, PrismaClient, CommodityTypes } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ProductCategory[] | { error: string }>
+  res: NextApiResponse<ProductItem[] | { error: string }>
 ) {
   const { type } = req.query;
 
@@ -30,12 +30,12 @@ export default async function handler(
   }
 
   const prisma = new PrismaClient();
-  const productCategory = await prisma.productCategory.findMany({
+  const productItems = await prisma.productItem.findMany({
     where: {
-      value: {
-        startsWith: type === CommodityTypes.DAIRY ? "D" : "H",
+      commodityType: {
+        equals: type,
       },
     },
   });
-  res.status(200).json(productCategory);
+  res.status(200).json(productItems);
 }
