@@ -24,6 +24,7 @@
     "@ag.ds-next/content": "latest",
     "@ag.ds-next/control-input": "latest",
     "@ag.ds-next/core": "latest",
+    "@ag.ds-next/direction-link": "latest",
     "@ag.ds-next/field": "latest",
     "@ag.ds-next/footer": "latest",
     "@ag.ds-next/header": "latest",

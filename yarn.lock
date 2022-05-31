@@ -57,6 +57,11 @@
   resolved "https://registry.yarnpkg.com/@ag.ds-next/core/-/core-2.1.3.tgz#a0d1328d9303045d8a00333e995e3f78a68267dc"
   integrity sha512-pgwgSdcnZKgLbz+Ko2CCRqFroCbkueDF41fnYnhngKhxpC4/OV5RAauQ3hjpu4441B0iRDx3NLvZw8pOh8qgjw==
 
+"@ag.ds-next/direction-link@latest":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/direction-link/-/direction-link-5.0.0.tgz#e2e54ed8e1a2986503e5ac533beb24c2635c30ec"
+  integrity sha512-g8Vd8yF+2Z9EG0ZYKjjTQnLLNXbFkfhUzgPuloVVYliI/j9c5gyRkQI7miaak1dvGejJrAozMPAt3+0kzeQfAw==
+
 "@ag.ds-next/field@latest":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/field/-/field-4.0.0.tgz#a8be5745517332cf6b005b2109b04999710dbf4d"

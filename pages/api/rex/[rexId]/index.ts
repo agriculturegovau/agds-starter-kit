@@ -51,13 +51,45 @@ export default async function handler(
       res.status(200).json(rex);
       return;
     case "PATCH":
+      const { certificate, countryId, products, ...rest } = req.body;
+
+      if (products) {
+        res.status(418).json({
+          error: "Products are managed on /products sub route",
+        });
+        return;
+      }
+
+      const updateData = {
+        ...rest,
+      };
+
+      if (certificate) {
+        updateData.certificate = {
+          upsert: {
+            create: {
+              ...certificate,
+            },
+            update: {
+              ...certificate,
+            },
+          },
+        };
+      }
+
+      if (countryId) {
+        updateData.exportCountry = {
+          connect: {
+            id: Number.parseInt(countryId),
+          },
+        };
+      }
+
       const rexPatch = await prisma.rex.update({
         where: {
           id: Number.parseInt(rexId),
         },
-        data: {
-          ...req.body,
-        },
+        data: updateData,
       });
 
       if (!rexPatch) {
