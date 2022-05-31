@@ -15,35 +15,100 @@ enum CommodityTypes {
   HONEY
 }
 
+enum RexStatus {
+  DRAFT
+  IN_PROGRESS
+  ON_HOLD
+  READY_TO_PRINT
+}
+
+enum CertificateStatus {
+  DRAFT
+  COMPLETE
+}
+
 model Rex {
-  id                String         @id @default(cuid())
-  commodityType     CommodityTypes
-  usesQuota         Boolean        @default(false)
-  usesImportedDairy Boolean        @default(false)
-  exportCountry     Country        @relation(fields: [countryId], references: [id])
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  countryId         Int
+  id            Int            @id @default(autoincrement())
+  rexNumber     String         @unique
+  clientRef     String
+  commodityType CommodityTypes
+  rexStatus     RexStatus
+  products      Product[]
+  exportCountry Country        @relation(fields: [countryId], references: [id])
+  consignee     String
+  certificate   Certificate?   @relation(fields: [certificateId], references: [id])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  history       History[]
+  dairyOptions  DairyOptions?  @relation(fields: [dairyOptionsId], references: [id])
+
+  countryId      Int
+  dairyOptionsId Int
+  certificateId  Int?
 }
 
-model DairyProduct {
-  id            Int    @id @default(autoincrement())
-  productId     Int    @unique
-  value         String
-  label         String
-  commodityType String
+model DairyOptions {
+  id                Int     @id @default(autoincrement())
+  usesQuota         Boolean @default(false)
+  usesImportedDairy Boolean @default(false)
+  Rex               Rex[]
 }
 
+model Product {
+  id          Int             @id @default(autoincrement())
+  productItem ProductItem     @relation(fields: [productItemId], references: [id])
+  category    ProductCategory @relation(fields: [categoryId], references: [id])
+  packedIn    PackType        @relation(fields: [packedInId], references: [id])
+  ahecc       Ahecc           @relation(fields: [aheccId], references: [id])
+
+  productItemId Int
+  categoryId    Int
+  packedInId    Int
+  aheccId       Int
+  Rex           Rex? @relation(fields: [rexId], references: [id])
+  rexId         Int?
+}
+
+model Certificate {
+  id                Int               @id @default(autoincrement())
+  certificateNumber String
+  dateIssued        DateTime
+  placeIssued       String
+  status            CertificateStatus
+  consigneeName     String
+  consigneeAddress  String
+  exporterName      String
+  exporterAddress   String
+  dateOfDeparture   DateTime
+  portOfLoading     String
+  portOfDischarge   String
+  declaration       String
+  Rex               Rex[]
+}
+
+model History {
+  id        Int       @id @default(autoincrement())
+  rexStatus RexStatus
+  date      DateTime  @default(now())
+  user      String
+  action    String
+  Rex       Rex?      @relation(fields: [rexId], references: [id])
+  rexId     Int?
+}
+
+// Static (ish) data grabbed form existing APIs
 model Ahecc {
-  id    Int    @id @default(autoincrement())
-  value String
-  label String
+  id      Int       @id @default(autoincrement())
+  value   String
+  label   String
+  Product Product[]
 }
 
 model PackType {
-  id    Int    @id @default(autoincrement())
-  value String
-  label String
+  id      Int       @id @default(autoincrement())
+  value   String
+  label   String
+  Product Product[]
 }
 
 model Country {
@@ -54,7 +119,17 @@ model Country {
 }
 
 model ProductCategory {
-  id    Int    @id @default(autoincrement())
-  value String
-  label String
+  id      Int       @id @default(autoincrement())
+  value   String
+  label   String
+  Product Product[]
+}
+
+model ProductItem {
+  id            Int            @id @default(autoincrement())
+  productId     Int            @unique
+  value         String
+  label         String
+  commodityType CommodityTypes
+  Product       Product[]
 }

@@ -3,6 +3,7 @@ import {
   ahecc,
   countries,
   dairyProducts,
+  honeyProducts,
   packTypes,
   productCategories,
 } from "../src/seedData";
@@ -20,7 +21,18 @@ async function main() {
 
 async function seedDairyProducts() {
   dairyProducts.forEach(async ({ commodityType, id, label, value }) => {
-    await prisma.dairyProduct.create({
+    await prisma.productItem.create({
+      data: {
+        label,
+        value,
+        commodityType,
+        productId: id,
+      },
+    });
+  });
+
+  honeyProducts.forEach(async ({ commodityType, id, label, value }) => {
+    await prisma.productItem.create({
       data: {
         label,
         value,
