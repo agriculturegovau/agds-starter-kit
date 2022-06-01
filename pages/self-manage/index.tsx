@@ -56,7 +56,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                   flexDirection="column"
                   padding={1}
                   alignItems="flex-start"
-                  style={{ margin: "12px" }}
+                  style={{ margin: "12px", flexBasis: "100%" }}
                 >
                   <Text fontSize="lg" fontWeight="bold">
                     {
@@ -78,7 +78,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                   flexDirection="column"
                   padding={1}
                   alignItems="flex-start"
-                  style={{ margin: "12px" }}
+                  style={{ margin: "12px", flexBasis: "100%" }}
                 >
                   <Text fontSize="lg" fontWeight="bold">
                     {
@@ -96,11 +96,11 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
 
                 <Flex
                   background="body"
-                  flexGrow={1}
+                  // flexGrow={1}
                   flexDirection="column"
                   padding={1}
                   alignItems="flex-start"
-                  style={{ margin: "12px" }}
+                  style={{ margin: "12px", flexBasis: "100%" }}
                 >
                   <Text fontSize="lg" fontWeight="bold">
                     0
@@ -117,7 +117,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                   flexDirection="column"
                   padding={1}
                   alignItems="flex-start"
-                  style={{ margin: "12px" }}
+                  style={{ margin: "12px", flexBasis: "100%" }}
                 >
                   <Text fontSize="lg" fontWeight="bold">
                     {
@@ -171,7 +171,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
 
             <Box paddingY={4}>
               <Heading as="h3" fontSize="xl">
-                In-progress export permit and certificate applications
+                Current consignment applications
               </Heading>
 
               <Box paddingTop={4}>
@@ -187,18 +187,20 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                       See all
                     </Button>
                   </Link>
-                  <Link href="/">
-                    <Button variant="secondary">
-                      + New request for export application
-                    </Button>
-                  </Link>
+                  <Box>
+                    <Link href="/">
+                      <Button variant="secondary">
+                        + New request for export application
+                      </Button>
+                    </Link>
+                  </Box>
                 </Flex>
               </Box>
             </Box>
 
             <Box paddingY={4}>
               <Heading as="h3" fontSize="xl">
-                Export permit and certificate application history
+                Consignment application history
               </Heading>
 
               <Box paddingTop={4}>
