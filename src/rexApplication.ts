@@ -15,9 +15,11 @@ export type RexApplication = Omit<
   products: Product[];
 };
 
-export type RexApiResponse = Rex & {
+export type RexApiResponse = NonNullableParams<Rex> & {
   certificate?: Certificate;
   dairyOptions?: DairyOptions;
   history: History[];
   products: Product[];
 };
+
+type NonNullableParams<T> = { [P in keyof T]: NonNullable<T[P]> };

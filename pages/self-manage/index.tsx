@@ -65,7 +65,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">In draft</Text>
-                  <Link href="./self-manage/consignments?status=DRAFT">
+                  <Link href="/self-manage/consignments?status=DRAFT">
                     <Button size="sm" variant="tertiary">
                       View
                     </Button>
@@ -87,7 +87,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">In review</Text>
-                  <Link href="./self-manage/consignments?status=REVIEW">
+                  <Link href="/self-manage/consignments?status=REVIEW">
                     <Button size="sm" variant="tertiary">
                       View
                     </Button>
@@ -127,7 +127,7 @@ const Dashboard: NextPage<DashboardProps> = ({ userData }) => {
                     }
                   </Text>
                   <Text fontSize="md">Ready to print</Text>
-                  <Link href="./self-manage/consignments?status=APPROVED">
+                  <Link href="/self-manage/consignments?status=APPROVED">
                     <Button size="sm" variant="tertiary">
                       View
                     </Button>

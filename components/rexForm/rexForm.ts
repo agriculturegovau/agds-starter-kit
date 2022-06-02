@@ -1,5 +1,6 @@
-export type RexFormProps<T> = T & {
-  rexId: number;
-  nextPage: () => void;
-  prevPage?: () => void;
+import { RexApiResponse } from "src/rexApplication";
+
+export type RexFormProps<T = void> = T & {
+  currentRex: Partial<RexApiResponse>;
+  onComplete: (newRex: Partial<RexApiResponse>) => void;
 };

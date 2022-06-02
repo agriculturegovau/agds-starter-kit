@@ -9,10 +9,9 @@ import { Button } from "@ag.ds-next/button";
 import axios from "axios";
 import { ControlGroup, Checkbox } from "@ag.ds-next/control-input";
 import { Heading } from "@ag.ds-next/heading";
+import { RexApiResponse } from "src/rexApplication";
 
-type CountryProps = {};
-
-export const CountryForm = ({ nextPage }: RexFormProps<CountryProps>) => {
+export const CountryForm = ({ onComplete, rexId }: RexFormProps<{}>) => {
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country>();
 
@@ -28,12 +27,12 @@ export const CountryForm = ({ nextPage }: RexFormProps<CountryProps>) => {
   useEffect(() => {
     if (processing && selectedCountry !== undefined) {
       axios
-        .patch<Rex>("/api/rex/", {
+        .patch<RexApiResponse>("/api/rex/", {
           countryId: selectedCountry.id,
         })
         .then((res) => {
           console.log(res);
-          nextPage();
+          onComplete(res.data);
         });
     }
   }, [processing]);
@@ -68,6 +67,7 @@ export const CountryForm = ({ nextPage }: RexFormProps<CountryProps>) => {
           onClick={() => {
             setProcessing(true);
           }}
+          loading={processing}
           disabled={selectedCountry === undefined}
         >
           Next
