@@ -4,6 +4,7 @@ import { Text } from "@ag.ds-next/text";
 import styled from "@emotion/styled";
 import { FC } from "react";
 import { ExternalLinkIcon } from "@ag.ds-next/icon";
+import { Heading } from "@ag.ds-next/heading";
 
 type QuickActionBoxProps = {
   icon?: FC;
@@ -15,6 +16,7 @@ type QuickActionBoxProps = {
 
 const BorderedBox = styled(Box)(() => ({
   border: "1px solid",
+  borderColor: "#D3D3D3",
   borderRadius: "4px",
   margin: "0.5rem",
   minWidth: "200px",
@@ -37,7 +39,8 @@ const StyledButton = styled(Button)(() => ({
 
 const FloatingIcon = styled(Box)(() => ({
   position: "relative",
-  top: "-35%",
+  top: "-32px",
+  right: "16px"
 }));
 
 export const QuickActionBox = ({
@@ -69,9 +72,9 @@ export const QuickActionBox = ({
           )}
           {title && (
             <Box flexGrow={1.5} paddingLeft={1}>
-              <Text as="p" fontSize="md" color="action" fontWeight="bold">
+              <Heading fontSize="lg" color="action">
                 {title}
-              </Text>
+              </Heading>
             </Box>
           )}
           {text && (
