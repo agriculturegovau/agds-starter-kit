@@ -11,7 +11,7 @@ export const CommodityForm = ({ currentRex, onComplete }: RexFormProps<{}>) => {
     "DAIRY",
     "HONEY",
   ]);
-  
+
   const [selectedCommodity, setSelectedCommodity] = useState<
     CommodityTypes | undefined
   >(currentRex.commodityType);
@@ -35,6 +35,7 @@ export const CommodityForm = ({ currentRex, onComplete }: RexFormProps<{}>) => {
         <Select
           label="Commodity type you wish to export to"
           required
+          disabled={currentRex.commodityType !== undefined}
           placeholder=" "
           value={selectedCommodity}
           onChange={(e) => {
