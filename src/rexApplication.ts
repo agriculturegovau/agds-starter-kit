@@ -4,6 +4,7 @@ import {
   DairyOptions,
   Certificate,
   History,
+  Country,
 } from "@prisma/client";
 
 export type RexApplication = Omit<
@@ -16,10 +17,11 @@ export type RexApplication = Omit<
 };
 
 export type RexApiResponse = NonNullableParams<Rex> & {
-  certificate?: Certificate;
-  dairyOptions?: DairyOptions;
-  history: History[];
-  products: Product[];
+  certificate?: Partial<Certificate>;
+  dairyOptions?: Partial<DairyOptions>;
+  exportCountry?: Partial<Country>;
+  history: Partial<History>[];
+  products: Partial<Product>[];
 };
 
 type NonNullableParams<T> = { [P in keyof T]: NonNullable<T[P]> };

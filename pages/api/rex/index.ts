@@ -26,11 +26,11 @@ export default async function handler(
       return;
     case "POST":
       const rexNumber = `REX000${Math.floor(Math.random() * 9000) + 999}`;
-      const { commodityType, dairyOptions } = req.body;
+      const { dairyOptions, countryId, ...rest } = req.body;
       const rex = await prisma.rex.create({
         data: {
           rexNumber,
-          commodityType,
+          ...rest,
           ...(dairyOptions
             ? {
                 dairyOptions: {
@@ -40,6 +40,22 @@ export default async function handler(
                 },
               }
             : {}),
+          ...(countryId
+            ? {
+                exportCountry: {
+                  connect: {
+                    id: countryId,
+                  },
+                },
+              }
+            : {}),
+        },
+        include: {
+          exportCountry: true,
+          products: true,
+          certificate: true,
+          dairyOptions: true,
+          history: true,
         },
       });
       res.status(201).json(rex);

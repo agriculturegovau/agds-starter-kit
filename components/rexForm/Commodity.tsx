@@ -11,7 +11,7 @@ export const CommodityForm = ({ currentRex, onComplete }: RexFormProps<{}>) => {
     "DAIRY",
     "HONEY",
   ]);
-  console.log(currentRex);
+  
   const [selectedCommodity, setSelectedCommodity] = useState<
     CommodityTypes | undefined
   >(currentRex.commodityType);

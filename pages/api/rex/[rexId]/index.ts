@@ -2,6 +2,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Rex, PrismaClient } from "@prisma/client";
 
+// Let's bring back everything when we interact with the DB
+const include = {
+  exportCountry: true,
+  products: true,
+  certificate: true,
+  dairyOptions: true,
+  history: true,
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Rex | { error: String }>
@@ -32,13 +41,7 @@ export default async function handler(
             equals: Number.parseInt(rexId),
           },
         },
-        include: {
-          exportCountry: true,
-          products: true,
-          certificate: true,
-          dairyOptions: true,
-          history: true,
-        },
+        include,
       });
 
       if (!rex) {
@@ -87,9 +90,10 @@ export default async function handler(
 
       const rexPatch = await prisma.rex.update({
         where: {
-          id: Number.parseInt(rexId),
+          rexNumber: rexId,
         },
         data: updateData,
+        include,
       });
 
       if (!rexPatch) {

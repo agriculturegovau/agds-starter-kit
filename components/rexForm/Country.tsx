@@ -11,7 +11,7 @@ import { ControlGroup, Checkbox } from "@ag.ds-next/control-input";
 import { Heading } from "@ag.ds-next/heading";
 import { RexApiResponse } from "src/rexApplication";
 
-export const CountryForm = ({ onComplete, rexId }: RexFormProps<{}>) => {
+export const CountryForm = ({ onComplete, currentRex }: RexFormProps<{}>) => {
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country>();
 
@@ -21,19 +21,28 @@ export const CountryForm = ({ onComplete, rexId }: RexFormProps<{}>) => {
     axios.get<Country[]>("/api/countries").then((res) => {
       const { data } = res;
       setCountryList(data);
+      if (currentRex.countryId) {
+        setSelectedCountry(data.find((c) => c.id === currentRex.countryId));
+      }
     });
   }, []);
 
   useEffect(() => {
     if (processing && selectedCountry !== undefined) {
-      axios
-        .patch<RexApiResponse>("/api/rex/", {
-          countryId: selectedCountry.id,
-        })
-        .then((res) => {
-          console.log(res);
+      if (currentRex.rexNumber) {
+        axios
+          .patch<RexApiResponse>(`/api/rex/${currentRex.rexNumber}`, {
+            countryId: selectedCountry.id,
+          })
+          .then((res) => {
+            onComplete(res.data);
+          });
+      } else {
+        const newRex = { ...currentRex, countryId: selectedCountry.id };
+        axios.post<RexApiResponse>("/api/rex/", newRex).then((res) => {
           onComplete(res.data);
         });
+      }
     }
   }, [processing]);
 

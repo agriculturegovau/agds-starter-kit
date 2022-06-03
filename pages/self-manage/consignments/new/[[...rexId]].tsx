@@ -8,6 +8,7 @@ import { Heading } from "@ag.ds-next/heading";
 import {
   ProgressIndicator,
   ProgressIndicatorItem,
+  ProgressIndicatorItemStatus,
 } from "@ag.ds-next/progress-indicator";
 import { Select } from "@ag.ds-next/select";
 import { Text } from "@ag.ds-next/text";
@@ -22,14 +23,16 @@ import { CountryForm } from "@components/rexForm/Country";
 import { IntroSplash } from "@components/rexForm/IntroSplash";
 import { Button } from "@ag.ds-next/button";
 import { CommodityForm } from "@components/rexForm/Commodity";
+import { DairyOptionsForm } from "@components/rexForm/DairyOptions";
 
 const formSegments: Array<{
   progressIndicator: ProgressIndicatorItem;
-  requiredRexProp: keyof RexApiResponse;
+  checkStepIsComplete: (rex: Partial<RexApiResponse>) => boolean;
 }> = [
   {
     progressIndicator: { label: "Commodity", status: "todo" },
-    requiredRexProp: "commodityType",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) =>
+      rex.commodityType !== undefined,
   },
   {
     progressIndicator: {
@@ -37,23 +40,26 @@ const formSegments: Array<{
       status: "todo",
       disabled: true,
     },
-    requiredRexProp: "dairyOptionsId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) =>
+      rex.dairyOptions !== undefined,
   },
   {
     progressIndicator: { label: "Country", status: "todo", disabled: true },
-    requiredRexProp: "countryId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) =>
+      rex.exportCountry !== undefined,
   },
   {
     progressIndicator: { label: "Products", status: "todo", disabled: true },
-    requiredRexProp: "products",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) =>
+      rex.products && rex.products.length > 0 ? true : false,
   },
   {
     progressIndicator: { label: "Exporter", status: "todo", disabled: true },
-    requiredRexProp: "consignee",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: { label: "Consignee", status: "todo", disabled: true },
-    requiredRexProp: "consignee",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: {
@@ -61,7 +67,7 @@ const formSegments: Array<{
       status: "todo",
       disabled: true,
     },
-    requiredRexProp: "clientRef",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: {
@@ -69,11 +75,11 @@ const formSegments: Array<{
       status: "todo",
       disabled: true,
     },
-    requiredRexProp: "certificateId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: { label: "SEW", status: "todo", disabled: true },
-    requiredRexProp: "certificateId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: {
@@ -81,11 +87,11 @@ const formSegments: Array<{
       status: "todo",
       disabled: true,
     },
-    requiredRexProp: "certificateId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
   {
     progressIndicator: { label: "Submit", status: "todo", disabled: true },
-    requiredRexProp: "certificateId",
+    checkStepIsComplete: (rex: Partial<RexApiResponse>) => false,
   },
 ];
 
@@ -94,21 +100,33 @@ const ConsignmentDetails = () => {
   const [currentPage, setCurrentPage] = useState(-1);
   const [currentRex, setCurrentRex] = useState<Partial<RexApiResponse>>({});
   const [formFlow, setFormFlow] = useState<ProgressIndicatorItem[]>([]);
+  const [availablePages, setAvailablePages] = useState<number[]>([0]);
 
   useEffect(() => {
-    setFormFlow(calculateFormFlow(currentPage, currentRex, setCurrentPage));
+    setFormFlow(
+      calculateFormFlow(availablePages, currentPage, currentRex, setCurrentPage)
+    );
   }, []);
 
   useEffect(() => {
     if (currentPage !== -1) {
-      setFormFlow(calculateFormFlow(currentPage, currentRex, setCurrentPage));
+      setAvailablePages((current) =>
+        current.includes(currentPage) ? current : [...current, currentPage]
+      );
+      setFormFlow(
+        calculateFormFlow(
+          availablePages,
+          currentPage,
+          currentRex,
+          setCurrentPage
+        )
+      );
     }
   }, [currentPage]);
 
   const subFormCommonProps = {
     currentRex,
     onComplete: (newRex: Partial<RexApiResponse>) => {
-      console.log(newRex);
       setCurrentRex((oldRex) => (oldRex ? { ...oldRex, ...newRex } : newRex));
       setCurrentPage((oldPage) => oldPage + 1);
     },
@@ -165,8 +183,15 @@ const ConsignmentDetails = () => {
                         Back
                       </DirectionLink>
                     )}
-                    {currentPage === 0 && (
-                      <CommodityForm {...subFormCommonProps} />
+                    {getSubForm(
+                      currentPage,
+                      currentRex,
+                      (newRex: Partial<RexApiResponse>) => {
+                        setCurrentRex((oldRex) =>
+                          oldRex ? { ...oldRex, ...newRex } : newRex
+                        );
+                        setCurrentPage((oldPage) => oldPage + 1);
+                      }
                     )}
                   </Box>
                 </Flex>
@@ -181,11 +206,66 @@ const ConsignmentDetails = () => {
 
 export default ConsignmentDetails;
 
+const getSubForm = (
+  currentPage: number,
+  currentRex: Partial<RexApiResponse>,
+  onComplete: (newRex: Partial<RexApiResponse>) => void
+) => {
+  const realPage =
+    currentPage > 0 && currentRex.commodityType !== CommodityTypes.DAIRY
+      ? currentPage + 1
+      : currentPage;
+
+  switch (realPage) {
+    case 0:
+      return <CommodityForm currentRex={currentRex} onComplete={onComplete} />;
+    case 1:
+      return (
+        <DairyOptionsForm currentRex={currentRex} onComplete={onComplete} />
+      );
+    case 2:
+      return <CountryForm currentRex={currentRex} onComplete={onComplete} />;
+    // case 3:
+    //   return <ProductForm currentRex={currentRex} onComplete={onComplete} />;
+    // case 4:
+    //   return <ExporterForm currentRex={currentRex} onComplete={onComplete} />;
+    // case 5:
+    //   return <ConsigneeForm currentRex={currentRex} onComplete={onComplete} />;
+    //   onComplete;
+    // case 6:
+    //   return (
+    //     <AuthorisationForm currentRex={currentRex} onComplete={onComplete} />
+    //   );
+    // case 7:
+    //   return (
+    //     <EndorsementsForm currentRex={currentRex} onComplete={onComplete} />
+    //   );
+    // case 8:
+    //   return <SEWForm currentRex={currentRex} onComplete={onComplete} />;
+    // case 9:
+    //   return (
+    //     <AdditionalDetailsForm
+    //       currentRex={currentRex}
+    //       onComplete={onComplete}
+    //     />
+    //   );
+    // case 10:
+    //   return <SubmitForm currentRex={currentRex} onComplete={onComplete} />;
+    default:
+      return (
+        <Box>
+          <Text>TBD</Text>
+        </Box>
+      );
+  }
+};
+
 function calculateFormFlow(
+  availablePages: number[],
   currentPage: number,
   currentRex: Partial<RexApiResponse>,
   setCurrentPage: Dispatch<SetStateAction<number>>
-) {
+): ProgressIndicatorItem[] {
   const newForm = formSegments
     .filter((item) => {
       return currentRex.commodityType === "DAIRY"
@@ -193,10 +273,12 @@ function calculateFormFlow(
         : item.progressIndicator.label !== "Dairy Options";
     })
     .map((page, index): ProgressIndicatorItem => {
-      const rexValue = currentRex[page.requiredRexProp];
+      const ap = !availablePages.includes(index);
       return {
         ...page.progressIndicator,
-        status: rexValue ? "done" : "todo",
+        status: page.checkStepIsComplete(currentRex) ? "done" : "todo",
+        // @ts-ignore
+        disabled: ap,
         onClick: () => setCurrentPage(index),
       };
     });
