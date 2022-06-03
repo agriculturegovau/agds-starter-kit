@@ -5,6 +5,8 @@ import { RexFormProps } from "./rexForm";
 import { Button } from "@ag.ds-next/button";
 import { Heading } from "@ag.ds-next/heading";
 import { ControlGroup, Checkbox } from "@ag.ds-next/control-input";
+import axios from "axios";
+import { RexApiResponse } from "src/rexApplication";
 
 export const DairyOptionsForm = ({
   currentRex,
@@ -16,13 +18,35 @@ export const DairyOptionsForm = ({
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
+    if (currentRex.dairyOptions) {
+      setUsesQuota(currentRex.dairyOptions.usesQuota ? true : false);
+      setUsesImportedDairy(
+        currentRex.dairyOptions.usesImportedDairy ? true : false
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     if (processing) {
-      onComplete({
-        dairyOptions: {
-          usesQuota,
-          usesImportedDairy,
-        },
-      });
+      if (currentRex.rexNumber) {
+        axios
+          .patch<RexApiResponse>(`/api/rex/${currentRex.rexNumber}`, {
+            dairyOptions: {
+              usesQuota,
+              usesImportedDairy,
+            },
+          })
+          .then((res) => {
+            onComplete(res.data);
+          });
+      } else {
+        onComplete({
+          dairyOptions: {
+            usesQuota,
+            usesImportedDairy,
+          },
+        });
+      }
     }
   }, [processing]);
 

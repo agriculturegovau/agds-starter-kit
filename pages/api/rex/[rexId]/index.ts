@@ -54,7 +54,8 @@ export default async function handler(
       res.status(200).json(rex);
       return;
     case "PATCH":
-      const { certificate, countryId, products, ...rest } = req.body;
+      const { certificate, countryId, dairyOptions, products, ...rest } =
+        req.body;
 
       if (products) {
         res.status(418).json({
@@ -84,6 +85,19 @@ export default async function handler(
         updateData.exportCountry = {
           connect: {
             id: Number.parseInt(countryId),
+          },
+        };
+      }
+
+      if (dairyOptions) {
+        updateData.dairyOptions = {
+          upsert: {
+            create: {
+              ...dairyOptions,
+            },
+            update: {
+              ...dairyOptions,
+            },
           },
         };
       }
