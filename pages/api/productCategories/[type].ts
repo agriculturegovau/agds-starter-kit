@@ -2,6 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ProductCategory, CommodityTypes, PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ProductCategory[] | { error: string }>
@@ -29,7 +31,6 @@ export default async function handler(
     return;
   }
 
-  const prisma = new PrismaClient();
   const productCategory = await prisma.productCategory.findMany({
     where: {
       value: {

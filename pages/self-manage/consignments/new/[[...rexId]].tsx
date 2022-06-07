@@ -24,6 +24,7 @@ import { IntroSplash } from "@components/rexForm/IntroSplash";
 import { Button } from "@ag.ds-next/button";
 import { CommodityForm } from "@components/rexForm/Commodity";
 import { DairyOptionsForm } from "@components/rexForm/DairyOptions";
+import { ProductForm } from "@components/rexForm/Products";
 
 const formSegments: Array<{
   progressIndicator: ProgressIndicatorItem;
@@ -46,7 +47,7 @@ const formSegments: Array<{
   {
     progressIndicator: { label: "Country", status: "todo", disabled: true },
     checkStepIsComplete: (rex: Partial<RexApiResponse>) =>
-      rex.exportCountry !== undefined,
+      rex.countryId !== undefined,
   },
   {
     progressIndicator: { label: "Products", status: "todo", disabled: true },
@@ -124,14 +125,6 @@ const ConsignmentDetails = () => {
     }
   }, [currentPage]);
 
-  const subFormCommonProps = {
-    currentRex,
-    onComplete: (newRex: Partial<RexApiResponse>) => {
-      setCurrentRex((oldRex) => (oldRex ? { ...oldRex, ...newRex } : newRex));
-      setCurrentPage((oldPage) => oldPage + 1);
-    },
-  };
-
   return (
     <>
       <DocumentTitle title="Home" />
@@ -191,6 +184,11 @@ const ConsignmentDetails = () => {
                           oldRex ? { ...oldRex, ...newRex } : newRex
                         );
                         setCurrentPage((oldPage) => oldPage + 1);
+                      },
+                      (newRex: Partial<RexApiResponse>) => {
+                        setCurrentRex((oldRex) =>
+                          oldRex ? { ...oldRex, ...newRex } : newRex
+                        );
                       }
                     )}
                   </Box>
@@ -209,7 +207,8 @@ export default ConsignmentDetails;
 const getSubForm = (
   currentPage: number,
   currentRex: Partial<RexApiResponse>,
-  onComplete: (newRex: Partial<RexApiResponse>) => void
+  onComplete: (newRex: Partial<RexApiResponse>) => void,
+  onUpdate: (newRex: Partial<RexApiResponse>) => void
 ) => {
   const realPage =
     currentPage > 0 && currentRex.commodityType !== CommodityTypes.DAIRY
@@ -218,27 +217,52 @@ const getSubForm = (
 
   switch (realPage) {
     case 0:
-      return <CommodityForm currentRex={currentRex} onComplete={onComplete} />;
+      return (
+        <CommodityForm
+          currentRex={currentRex}
+          onComplete={onComplete}
+          onUpdate={onUpdate}
+        />
+      );
     case 1:
       return (
-        <DairyOptionsForm currentRex={currentRex} onComplete={onComplete} />
+        <DairyOptionsForm
+          currentRex={currentRex}
+          onComplete={onComplete}
+          onUpdate={onUpdate}
+        />
       );
     case 2:
-      return <CountryForm currentRex={currentRex} onComplete={onComplete} />;
-    // case 3:
-    //   return <ProductForm currentRex={currentRex} onComplete={onComplete} />;
+      return (
+        <CountryForm
+          currentRex={currentRex}
+          onComplete={onComplete}
+          onUpdate={onUpdate}
+        />
+      );
+    case 3:
+      return (
+        <ProductForm
+          currentRex={currentRex}
+          onComplete={onComplete}
+          onUpdate={onUpdate}
+        />
+      );
     // case 4:
-    //   return <ExporterForm currentRex={currentRex} onComplete={onComplete} />;
+    //   return <ExporterForm currentRex={currentRex} onComplete={onComplete}
+    // onUpdate={onUpdate} />;
     // case 5:
-    //   return <ConsigneeForm currentRex={currentRex} onComplete={onComplete} />;
-    //   onComplete;
+    //   return <ConsigneeForm currentRex={currentRex} onComplete={onComplete}
+    // onUpdate={onUpdate} />;
     // case 6:
     //   return (
-    //     <AuthorisationForm currentRex={currentRex} onComplete={onComplete} />
+    //     <AuthorisationForm currentRex={currentRex} onComplete={onComplete}
+    // onUpdate={onUpdate} />
     //   );
     // case 7:
     //   return (
-    //     <EndorsementsForm currentRex={currentRex} onComplete={onComplete} />
+    //     <EndorsementsForm currentRex={currentRex} onComplete={onComplete}
+    // onUpdate={onUpdate} />
     //   );
     // case 8:
     //   return <SEWForm currentRex={currentRex} onComplete={onComplete} />;
@@ -247,10 +271,12 @@ const getSubForm = (
     //     <AdditionalDetailsForm
     //       currentRex={currentRex}
     //       onComplete={onComplete}
+    // onUpdate={onUpdate}
     //     />
     //   );
     // case 10:
-    //   return <SubmitForm currentRex={currentRex} onComplete={onComplete} />;
+    //   return <SubmitForm currentRex={currentRex} onComplete={onComplete}
+    // onUpdate={onUpdate} />;
     default:
       return (
         <Box>

@@ -2,13 +2,29 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Rex, PrismaClient } from "@prisma/client";
 
+// Let's bring back everything when we interact with the DB
+export const defaultIncludes = {
+  exportCountry: true,
+  products: {
+    include: {
+      ahecc: true,
+      category: true,
+      packedIn: true,
+      productItem: true,
+    },
+  },
+  certificate: true,
+  dairyOptions: true,
+  history: true,
+};
+
+const prisma = new PrismaClient();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Rex[] | Rex>
 ) {
   const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
-
-  const prisma = new PrismaClient();
 
   switch (req.method) {
     case "GET":
@@ -16,10 +32,7 @@ export default async function handler(
         orderBy: {
           createdAt: "desc",
         },
-        include: {
-          exportCountry: true,
-          products: true,
-        },
+        include: defaultIncludes,
         take: limit,
       });
       res.status(200).json(rexs);
@@ -50,13 +63,7 @@ export default async function handler(
               }
             : {}),
         },
-        include: {
-          exportCountry: true,
-          products: true,
-          certificate: true,
-          dairyOptions: true,
-          history: true,
-        },
+        include: defaultIncludes,
       });
       res.status(201).json(rex);
       return;

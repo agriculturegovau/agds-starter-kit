@@ -38,10 +38,7 @@ export const CountryForm = ({ onComplete, currentRex }: RexFormProps<{}>) => {
             onComplete(res.data);
           });
       } else {
-        const newRex = { ...currentRex, countryId: selectedCountry.id };
-        axios.post<RexApiResponse>("/api/rex/", newRex).then((res) => {
-          onComplete(res.data);
-        });
+        onComplete({ countryId: selectedCountry.id });
       }
     }
   }, [processing]);

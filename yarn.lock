@@ -101,6 +101,11 @@
   dependencies:
     focus-trap-react "^8.9.0"
 
+"@ag.ds-next/page-alert@latest":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/page-alert/-/page-alert-4.0.0.tgz#6b31c911929593759ee2aaf4ec5918f246eb6c1c"
+  integrity sha512-vw1X/c5EGwt0jgkP8sXK66Q1wdZlTZP+qcy4CPEem7pcud0N1nPaMABZoTZmwVMrc7+D7AKxJ9vjALEfXRYK1w==
+
 "@ag.ds-next/progress-indicator@latest":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@ag.ds-next/progress-indicator/-/progress-indicator-5.0.0.tgz#9419cdc9128b779f35a6cc97c1dc21fe8a11379f"

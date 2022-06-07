@@ -1,15 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Rex, PrismaClient } from "@prisma/client";
+import { defaultIncludes } from "..";
 
-// Let's bring back everything when we interact with the DB
-const include = {
-  exportCountry: true,
-  products: true,
-  certificate: true,
-  dairyOptions: true,
-  history: true,
-};
+const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,8 +25,6 @@ export default async function handler(
     return;
   }
 
-  const prisma = new PrismaClient();
-
   switch (req.method) {
     case "GET":
       const rex = await prisma.rex.findFirst({
@@ -41,7 +33,7 @@ export default async function handler(
             equals: Number.parseInt(rexId),
           },
         },
-        include,
+        include: defaultIncludes,
       });
 
       if (!rex) {
@@ -59,7 +51,7 @@ export default async function handler(
 
       if (products) {
         res.status(418).json({
-          error: "Products are managed on /products sub route",
+          error: "Products are managed on /api/rex/[rexId]/product sub route",
         });
         return;
       }
@@ -107,7 +99,7 @@ export default async function handler(
           rexNumber: rexId,
         },
         data: updateData,
-        include,
+        include: defaultIncludes,
       });
 
       if (!rexPatch) {
