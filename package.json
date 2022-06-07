@@ -31,6 +31,7 @@
     "@ag.ds-next/heading": "latest",
     "@ag.ds-next/icon": "latest",
     "@ag.ds-next/link-list": "latest",
+    "@ag.ds-next/loading": "latest",
     "@ag.ds-next/main-nav": "latest",
     "@ag.ds-next/page-alert": "latest",
     "@ag.ds-next/progress-indicator": "latest",

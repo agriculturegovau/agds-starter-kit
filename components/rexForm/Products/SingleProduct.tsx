@@ -1,6 +1,9 @@
 import { Box } from "@ag.ds-next/box";
 import { Button } from "@ag.ds-next/button";
+import { Column, Columns } from "@ag.ds-next/columns";
 import { Heading } from "@ag.ds-next/heading";
+import { LoadingDots } from "@ag.ds-next/loading";
+import { Select } from "@ag.ds-next/select";
 import { Text } from "@ag.ds-next/text";
 import {
   Ahecc,
@@ -25,10 +28,21 @@ export const SingleProductForm = ({
   onUpdate,
 }: SingleProductFormProps) => {
   const [loading, setLoading] = useState(true);
+
   const [productItems, setProductItems] = useState<ProductItem[]>([]);
-  const [productCategory, setProductCategory] = useState<ProductCategory[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>(
+    []
+  );
   const [packTypes, setPackTypes] = useState<PackType[]>([]);
   const [aheccs, setAheccs] = useState<Ahecc[]>([]);
+
+  const [selectedProductItem, setSelectedProductItem] = useState<ProductItem>();
+  const [selectedProductCategory, setSelectedProductCategory] =
+    useState<ProductCategory>();
+  const [selectedPackType, setSelectedPackType] = useState<PackType>();
+  const [selectedOuterPackType, setSelectedOuterPackType] =
+    useState<PackType>();
+  const [selectedAhecc, setSelectedAhecc] = useState<Ahecc>();
 
   const [processing, setProcessing] = useState(false);
 
@@ -43,7 +57,7 @@ export const SingleProductForm = ({
     ]).then((res) => {
       const [productItemRes, productCategoryRes, packTypeRes, aheccRes] = res;
       setProductItems(productItemRes.data);
-      setProductCategory(productCategoryRes.data);
+      setProductCategories(productCategoryRes.data);
       setPackTypes(packTypeRes.data);
       setAheccs(aheccRes.data);
       setLoading(false);
@@ -53,12 +67,11 @@ export const SingleProductForm = ({
   useEffect(() => {
     if (processing) {
       const testData: Partial<Omit<RexProductApiResponse, "id" | "rexId">> = {
-        productItemId: productItems[0].id,
-        categoryId: productCategory[0].id,
-        packedInId: packTypes[0].id,
-        aheccId: aheccs[0].id,
+        productItemId: selectedProductItem?.id,
+        categoryId: selectedProductCategory?.id,
+        packedInId: selectedPackType?.id,
+        aheccId: selectedAhecc?.id,
       };
-      console.log(testData);
 
       if (currentRex.id) {
         if (currentProduct) {
@@ -73,7 +86,6 @@ export const SingleProductForm = ({
             setProcessing(false);
           });
         } else {
-          console.log("add product");
           addProduct(currentRex, testData).then((res) => {
             onUpdate({
               ...currentRex,
@@ -84,12 +96,8 @@ export const SingleProductForm = ({
           });
         }
       } else {
-        console.log("createRex");
         createRex(currentRex).then((newRex) => {
-          console.log("addProduct", { newRex });
-
           addProduct(newRex, testData).then((res) => {
-            console.log("addProduct res", res);
             onUpdate({
               ...newRex,
               products: [res],
@@ -106,20 +114,116 @@ export const SingleProductForm = ({
       <Heading as="h2" fontSize="xxl">
         Products for export
       </Heading>
-      <Box paddingTop={2}>
+      <Box paddingY={2}>
         <Text as="p">
           Search for the product you wish to export. If you cannot find your
           product in the list please contact the Department.
         </Text>
       </Box>
-      <Button
-        loading={processing}
-        onClick={async () => {
-          setProcessing(true);
-        }}
-      >
-        DO IT!
-      </Button>
+      {loading && <LoadingDots size="lg" aria-label="Loading" role="status" />}
+      {!loading && (
+        <>
+          <Box paddingY={2}>
+            <Select
+              block
+              label="Product you wish to export to"
+              required
+              placeholder=" "
+              value={selectedProductItem?.value}
+              onChange={(e) => {
+                const newProductItem = productItems.find(
+                  (productItem) => productItem.value === e.target.value
+                );
+                setSelectedProductItem(newProductItem);
+              }}
+              options={productItems.map((productItem) => ({
+                label: productItem.label,
+                value: productItem.value,
+              }))}
+            />
+          </Box>
+
+          {selectedProductItem && (
+            <>
+              <Box paddingY={2}>
+                <Heading as="h2" fontSize="xxl">
+                  Add details for the product
+                </Heading>
+              </Box>
+
+              <Box paddingY={1}>
+                <Select
+                  block
+                  label="What is the product category"
+                  required
+                  placeholder=" "
+                  value={selectedProductCategory?.value}
+                  onChange={(e) => {
+                    const newProductCategory = productCategories.find(
+                      (productCategory) =>
+                        productCategory.value === e.target.value
+                    );
+                    setSelectedProductCategory(newProductCategory);
+                  }}
+                  options={productCategories.map((productCategory) => ({
+                    label: productCategory.label,
+                    value: productCategory.value,
+                  }))}
+                />
+              </Box>
+
+              <Box paddingY={1}>
+                <Select
+                  block
+                  label="What is the product packed in"
+                  required
+                  placeholder=" "
+                  value={selectedPackType?.value}
+                  onChange={(e) => {
+                    const newPackType = packTypes.find(
+                      (packType) => packType.value === e.target.value
+                    );
+                    setSelectedPackType(newPackType);
+                  }}
+                  options={packTypes.map((packType) => ({
+                    label: packType.label,
+                    value: packType.value,
+                  }))}
+                />
+              </Box>
+              <Box paddingY={1}>
+                <Select
+                  block
+                  label="AHECC"
+                  required
+                  placeholder=" "
+                  hint="The Australian Harmonized Export Commodity Classification (AHECC) is the product classification used to identify goods being exported from Australia."
+                  value={selectedAhecc?.value}
+                  onChange={(e) => {
+                    const newAhecc = aheccs.find(
+                      (ahecc) => ahecc.value === e.target.value
+                    );
+                    setSelectedAhecc(newAhecc);
+                  }}
+                  options={aheccs.map((ahecc) => ({
+                    label: ahecc.label,
+                    value: ahecc.value,
+                  }))}
+                />
+              </Box>
+
+              <Button
+                loading={processing}
+                onClick={() => {
+                  setProcessing(true);
+                }}
+              >
+                Next
+              </Button>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };
