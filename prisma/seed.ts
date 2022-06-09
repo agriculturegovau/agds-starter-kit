@@ -6,6 +6,7 @@ import {
   honeyProducts,
   packTypes,
   productCategories,
+  unitOfMeasure,
 } from "../src/seedData";
 const prisma = new PrismaClient();
 
@@ -16,6 +17,7 @@ async function main() {
     seedCountries(),
     seedAhecc(),
     seedProductCategories(),
+    seedUnitOfMeasure(),
   ]);
 }
 
@@ -79,6 +81,17 @@ async function seedAhecc() {
 async function seedProductCategories() {
   productCategories.forEach(async ({ label, value }) => {
     await prisma.productCategory.create({
+      data: {
+        label,
+        value,
+      },
+    });
+  });
+}
+
+async function seedUnitOfMeasure() {
+  unitOfMeasure.forEach(async ({ label, value }) => {
+    await prisma.unitOfMeasure.create({
       data: {
         label,
         value,

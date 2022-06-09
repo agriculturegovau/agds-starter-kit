@@ -43,8 +43,8 @@ model Rex {
   dairyOptions  DairyOptions?   @relation(fields: [dairyOptionsId], references: [id])
 
   countryId      Int?
-  dairyOptionsId Int?
-  certificateId  Int?
+  dairyOptionsId Int? @unique
+  certificateId  Int? @unique
 }
 
 model DairyOptions {
@@ -55,18 +55,32 @@ model DairyOptions {
 }
 
 model Product {
-  id          Int             @id @default(autoincrement())
-  productItem ProductItem     @relation(fields: [productItemId], references: [id])
-  category    ProductCategory @relation(fields: [categoryId], references: [id])
-  packedIn    PackType        @relation(fields: [packedInId], references: [id])
-  ahecc       Ahecc           @relation(fields: [aheccId], references: [id])
+  id                          Int             @id @default(autoincrement())
+  productItem                 ProductItem     @relation(fields: [productItemId], references: [id])
+  category                    ProductCategory @relation(fields: [categoryId], references: [id])
+  packedIn                    PackType?       @relation(fields: [packedInId], references: [id], name: "PACKED_IN")
+  ahecc                       Ahecc           @relation(fields: [aheccId], references: [id])
+  netWeight                   Float           @default(0)
+  netWeightUnit               UnitOfMeasure?  @relation(fields: [netWeightUnitId], references: [id], name: "NET_WEIGHT_UNIT")
+  grossWeight                 Float           @default(0)
+  grossWeightUnit             UnitOfMeasure?  @relation(fields: [grossWeightUnitId], references: [id], name: "GROSS_WEIGHT_UNIT")
+  outerPackaging              PackType?       @relation(fields: [outerPackagingId], references: [id], name: "OUTER_PACKAGING")
+  quantity                    Int             @default(0)
+  individualPackageWeight     Float           @default(0)
+  individualPackageWeightUnit UnitOfMeasure?  @relation(fields: [individualPackageWeightUnitId], references: [id], name: "INDIVIDUAL_PACKAGE_WEIGHT_UNIT")
+  shippingMarks               String          @default("")
 
-  productItemId Int
-  categoryId    Int
-  packedInId    Int
-  aheccId       Int
-  Rex           Rex? @relation(fields: [rexId], references: [id])
-  rexId         Int?
+  productItemId                 Int
+  categoryId                    Int
+  packedInId                    Int
+  aheccId                       Int
+  netWeightUnitId               Int?
+  grossWeightUnitId             Int?
+  outerPackagingId              Int?
+  individualPackageWeightUnitId Int?
+
+  Rex   Rex? @relation(fields: [rexId], references: [id])
+  rexId Int?
 }
 
 model Certificate {
@@ -105,10 +119,11 @@ model Ahecc {
 }
 
 model PackType {
-  id      Int       @id @default(autoincrement())
-  value   String
-  label   String
-  Product Product[]
+  id                     Int       @id @default(autoincrement())
+  value                  String
+  label                  String
+  Product_packedIn       Product[] @relation(name: "PACKED_IN")
+  Product_outerPAckaging Product[] @relation(name: "OUTER_PACKAGING")
 }
 
 model Country {
@@ -132,4 +147,13 @@ model ProductItem {
   label         String
   commodityType CommodityTypes
   Product       Product[]
+}
+
+model UnitOfMeasure {
+  id                  Int       @id @default(autoincrement())
+  value               String
+  label               String
+  Product_netWeight   Product[] @relation(name: "NET_WEIGHT_UNIT")
+  Product_grossWeight Product[] @relation(name: "GROSS_WEIGHT_UNIT")
+  Product_individual  Product[] @relation(name: "INDIVIDUAL_PACKAGE_WEIGHT_UNIT")
 }
