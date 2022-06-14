@@ -55,12 +55,65 @@ export default async function handler(
               id: data.productItemId,
             },
           },
+          grossWeight: data.grossWeight,
+          ...(data.grossWeightUnitId
+            ? {
+                grossWeightUnit: {
+                  connect: {
+                    id: data.grossWeightUnitId,
+                  },
+                },
+              }
+            : {}),
+          netWeight: data.netWeight,
+          ...(data.netWeightUnitId
+            ? {
+                netWeightUnit: {
+                  connect: {
+                    id: data.netWeightUnitId,
+                  },
+                },
+              }
+            : {}),
+          ...(data.outerPackagingId
+            ? {
+                outerPackaging: {
+                  connect: {
+                    id: data.outerPackagingId,
+                  },
+                },
+              }
+            : {}),
+          quantity: data.quantity,
+          ...(data.outerPackagingId
+            ? {
+                outerPackaging: {
+                  connect: {
+                    id: data.outerPackagingId,
+                  },
+                },
+              }
+            : {}),
+          individualPackageWeight: data.individualPackageWeight,
+          ...(data.individualPackageWeightUnitId
+            ? {
+                individualPackageWeightUnit: {
+                  connect: {
+                    id: data.individualPackageWeightUnitId,
+                  },
+                },
+              }
+            : {}),
+          shippingMarks: data.shippingMarks,
         },
         include: {
           ahecc: true,
           category: true,
           packedIn: true,
           productItem: true,
+          grossWeightUnit: true,
+          netWeightUnit: true,
+          outerPackaging: true,
         },
       });
 
