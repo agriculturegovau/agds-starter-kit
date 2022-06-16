@@ -3,20 +3,15 @@ import { Box, Flex } from "@ag.ds-next/box";
 import { Breadcrumbs } from "@ag.ds-next/breadcrumbs";
 import { DirectionLink } from "@ag.ds-next/direction-link";
 import { Content } from "@ag.ds-next/content";
-import { ControlGroup, Checkbox } from "@ag.ds-next/control-input";
 import { Heading } from "@ag.ds-next/heading";
 import {
   ProgressIndicator,
   ProgressIndicatorItem,
-  ProgressIndicatorItemStatus,
 } from "@ag.ds-next/progress-indicator";
-import { Select } from "@ag.ds-next/select";
 import { Text } from "@ag.ds-next/text";
 import { AppLayout } from "@components/AppLayout";
 import { DocumentTitle } from "@components/DocumentTitle";
 import { CommodityTypes, Rex } from "@prisma/client";
-import axios from "axios";
-import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { RexApiResponse } from "src/rexApplication";
 import { CountryForm } from "@components/rexForm/Country";
@@ -25,6 +20,7 @@ import { Button } from "@ag.ds-next/button";
 import { CommodityForm } from "@components/rexForm/Commodity";
 import { DairyOptionsForm } from "@components/rexForm/DairyOptions";
 import { ProductForm } from "@components/rexForm/Products";
+import { useRouter } from "next/router";
 
 const formSegments: Array<{
   progressIndicator: ProgressIndicatorItem;
@@ -102,6 +98,8 @@ const ConsignmentDetails = () => {
   const [currentRex, setCurrentRex] = useState<Partial<RexApiResponse>>({});
   const [formFlow, setFormFlow] = useState<ProgressIndicatorItem[]>([]);
   const [availablePages, setAvailablePages] = useState<number[]>([0]);
+
+  const router = useRouter();
 
   useEffect(() => {
     setFormFlow(
@@ -189,6 +187,9 @@ const ConsignmentDetails = () => {
                         setCurrentRex((oldRex) =>
                           oldRex ? { ...oldRex, ...newRex } : newRex
                         );
+                      },
+                      () => {
+                        router.push('/self-manage');
                       }
                     )}
                   </Box>
@@ -204,11 +205,14 @@ const ConsignmentDetails = () => {
 
 export default ConsignmentDetails;
 
+const noOp = () => {};
+
 const getSubForm = (
   currentPage: number,
   currentRex: Partial<RexApiResponse>,
   onComplete: (newRex: Partial<RexApiResponse>) => void,
-  onUpdate: (newRex: Partial<RexApiResponse>) => void
+  onUpdate: (newRex: Partial<RexApiResponse>) => void,
+  onExit: () => void
 ) => {
   const realPage =
     currentPage > 0 && currentRex.commodityType !== CommodityTypes.DAIRY
@@ -222,6 +226,7 @@ const getSubForm = (
           currentRex={currentRex}
           onComplete={onComplete}
           onUpdate={onUpdate}
+          onExit={noOp} //Because the REX isn't created yet, we don't want to exit the form
         />
       );
     case 1:
@@ -230,6 +235,7 @@ const getSubForm = (
           currentRex={currentRex}
           onComplete={onComplete}
           onUpdate={onUpdate}
+          onExit={noOp}
         />
       );
     case 2:
@@ -238,6 +244,7 @@ const getSubForm = (
           currentRex={currentRex}
           onComplete={onComplete}
           onUpdate={onUpdate}
+          onExit={noOp}
         />
       );
     case 3:
@@ -246,6 +253,7 @@ const getSubForm = (
           currentRex={currentRex}
           onComplete={onComplete}
           onUpdate={onUpdate}
+          onExit={onExit}
         />
       );
     // case 4:

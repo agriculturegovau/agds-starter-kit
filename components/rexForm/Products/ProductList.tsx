@@ -4,12 +4,12 @@ import { Heading } from "@ag.ds-next/heading";
 import { PageAlert } from "@ag.ds-next/page-alert";
 import { Text, TextLink } from "@ag.ds-next/text";
 import styled from "@emotion/styled";
-import { Product } from "@prisma/client";
 import { RexApiResponse, RexProductApiResponse } from "src/rexApplication";
 
 type ProductListFormProps = {
   currentRex: Partial<RexApiResponse>;
   onSelect: (product: RexProductApiResponse) => void;
+  onCreateNewProduct: () => void;
   justGenerated: boolean;
 };
 
@@ -18,6 +18,7 @@ const ProductBox = styled(Box)(() => ({
 }));
 
 export const ProductListForm = ({
+  onCreateNewProduct,
   currentRex,
   onSelect,
   justGenerated,
@@ -45,11 +46,16 @@ export const ProductListForm = ({
         {currentRex.products &&
           currentRex.products.length > 0 &&
           currentRex.products.map((product, i) => {
-            console.log(product);
             return (
               <ProductBox rounded key={product.id} padding={1}>
-                <Flex flexDirection="row" justifyContent="space-between">
-                  <Text as="p">{`${i}. ${product.productItem.label}`}</Text>
+                <Flex
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Text fontSize="md">{`${i + 1}. ${
+                    product.productItem.label
+                  }`}</Text>
                   <Button
                     variant="tertiary"
                     onClick={() => {
@@ -62,6 +68,16 @@ export const ProductListForm = ({
               </ProductBox>
             );
           })}
+      </Box>
+      <Box paddingTop={1}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            onCreateNewProduct();
+          }}
+        >
+          Add another product +
+        </Button>
       </Box>
     </>
   );

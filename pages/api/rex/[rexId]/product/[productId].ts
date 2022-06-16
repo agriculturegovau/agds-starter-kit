@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Rex, PrismaClient, Product } from "@prisma/client";
+import { defaultIncludes } from "../..";
 
 const prisma = new PrismaClient();
 
@@ -49,15 +50,11 @@ export default async function handler(
         data: {
           ...data,
         },
-        include: {
-          ahecc: true,
-          category: true,
-          packedIn: true,
-          productItem: true,
-        },
+        include: defaultIncludes.products.include,
       });
 
       res.status(200).json(product);
+      return;
     default:
       res.setHeader("Allow", ["PATCH"]);
       res.status(405).end(`Method ${req.method} Not Allowed`);

@@ -45,20 +45,30 @@ export const SingleProductForm = ({
   const [selectedItems, setSelectedItems] = useState<
     Partial<{
       productItem: ProductItem;
-      productCategory: ProductCategory;
-      packageType: PackType;
+      category: ProductCategory;
+      packedIn: PackType;
       ahecc: Ahecc;
       netWeight: number;
-      netUnitOfMeasure: UnitOfMeasure;
+      netWeightUnit: UnitOfMeasure;
       grossWeight: number;
-      grossUnitOfMeasure: UnitOfMeasure;
-      outerPackageType: PackType;
+      grossWeightUnit: UnitOfMeasure;
+      outerPackaging: PackType;
       quantity: number;
-      individualWeight: number;
-      individualUnitOfMeasure: UnitOfMeasure;
+      individualPackageWeight: number;
+      individualPackageWeightUnit: UnitOfMeasure;
       shippingMarks: string;
     }>
-  >({});
+  >(
+    currentProduct
+      ? currentProduct
+      : {
+          netWeight: 0,
+          grossWeight: 0,
+          quantity: 0,
+          individualPackageWeight: 0,
+          shippingMarks: "",
+        }
+  );
 
   const [processing, setProcessing] = useState(false);
 
@@ -84,32 +94,34 @@ export const SingleProductForm = ({
 
   useEffect(() => {
     if (processing) {
-      const testData: Partial<Omit<RexProductApiResponse, "id" | "rexId">> = {
+      const testData: Partial<Omit<RexProductApiResponse, "rexId">> = {
+        id: currentProduct?.id,
         productItemId: selectedItems.productItem?.id,
-        categoryId: selectedItems.productCategory?.id,
-        packedInId: selectedItems.packageType?.id,
+        categoryId: selectedItems.category?.id,
+        packedInId: selectedItems.packedIn?.id,
         aheccId: selectedItems.ahecc?.id,
         netWeight: selectedItems.netWeight,
-        netWeightUnitId: selectedItems.netUnitOfMeasure?.id,
+        netWeightUnitId: selectedItems.netWeightUnit?.id,
         grossWeight: selectedItems.grossWeight,
-        grossWeightUnitId: selectedItems.grossUnitOfMeasure?.id,
-        outerPackagingId: selectedItems.outerPackageType?.id,
+        grossWeightUnitId: selectedItems.grossWeightUnit?.id,
+        outerPackagingId: selectedItems.outerPackaging?.id,
         quantity: selectedItems.quantity,
-        individualPackageWeight: selectedItems.individualWeight,
+        individualPackageWeight: selectedItems.individualPackageWeight,
         individualPackageWeightUnitId:
-          selectedItems.individualUnitOfMeasure?.id,
+          selectedItems.individualPackageWeightUnit?.id,
         shippingMarks: selectedItems.shippingMarks,
       };
 
       if (currentRex.id) {
         if (currentProduct) {
-          console.log("update product");
           updateProduct(currentRex, testData).then((res) => {
             if (res)
               onUpdate({
                 ...currentRex,
                 //@ts-ignore
-                products: [...currentRex.products, res],
+                products: currentRex.products.map((product) =>
+                  product.id === res.id ? res : product
+                ),
               });
             setProcessing(false);
           });
@@ -188,7 +200,7 @@ export const SingleProductForm = ({
                   label="What is the product category"
                   required
                   placeholder=" "
-                  value={selectedItems.productCategory?.value}
+                  value={selectedItems.category?.value}
                   onChange={(e) => {
                     const newProductCategory =
                       selectData.productCategories.find(
@@ -197,7 +209,7 @@ export const SingleProductForm = ({
                       );
                     setSelectedItems((oldValue) => ({
                       ...oldValue,
-                      productCategory: newProductCategory,
+                      category: newProductCategory,
                     }));
                   }}
                   options={selectData.productCategories.map(
@@ -215,14 +227,14 @@ export const SingleProductForm = ({
                   label="What is the product packed in"
                   required
                   placeholder=" "
-                  value={selectedItems.packageType?.value}
+                  value={selectedItems.packedIn?.value}
                   onChange={(e) => {
                     const newPackType = selectData.packTypes.find(
                       (packType) => packType.value === e.target.value
                     );
                     setSelectedItems((oldValue) => ({
                       ...oldValue,
-                      packageType: newPackType,
+                      packedIn: newPackType,
                     }));
                   }}
                   options={selectData.packTypes.map((packType) => ({
@@ -257,13 +269,13 @@ export const SingleProductForm = ({
 
               <MeasureAmountUnit
                 amount={selectedItems.netWeight ? selectedItems.netWeight : 0}
-                unitOfMeasure={selectedItems.netUnitOfMeasure}
+                unitOfMeasure={selectedItems.netWeightUnit}
                 amountLabel="Net metric weight amount"
                 onChange={(amount, unit) => {
                   setSelectedItems((oldValue) => ({
                     ...oldValue,
                     netWeight: amount,
-                    netUnitOfMeasure: unit,
+                    netWeightUnit: unit,
                   }));
                 }}
                 unitLabel="Net metric weight unit"
@@ -273,13 +285,13 @@ export const SingleProductForm = ({
                 amount={
                   selectedItems.grossWeight ? selectedItems.grossWeight : 0
                 }
-                unitOfMeasure={selectedItems.grossUnitOfMeasure}
+                unitOfMeasure={selectedItems.grossWeightUnit}
                 amountLabel="Gross metric weight amount"
                 onChange={(amount, unit) => {
                   setSelectedItems((oldValue) => ({
                     ...oldValue,
                     grossWeight: amount,
-                    grossUnitOfMeasure: unit,
+                    grossWeightUnit: unit,
                   }));
                 }}
                 unitLabel="Gross metric weight unit"
@@ -297,14 +309,14 @@ export const SingleProductForm = ({
                   label="What is the product packed in"
                   required
                   placeholder=" "
-                  value={selectedItems.outerPackageType?.value}
+                  value={selectedItems.outerPackaging?.value}
                   onChange={(e) => {
                     const newPackType = selectData.packTypes.find(
                       (packType) => packType.value === e.target.value
                     );
                     setSelectedItems((oldValue) => ({
                       ...oldValue,
-                      outerPackageType: newPackType,
+                      outerPackaging: newPackType,
                     }));
                   }}
                   options={selectData.packTypes.map((packType) => ({
@@ -318,24 +330,29 @@ export const SingleProductForm = ({
                   label="Quantity"
                   value={selectedItems.quantity}
                   type="number"
-                  onChange={(e) => {}}
+                  onChange={(e) => {
+                    setSelectedItems((oldValue) => ({
+                      ...oldValue,
+                      quantity: Number.parseInt(e.target.value),
+                    }));
+                  }}
                 />
               </Box>
 
               <Box paddingY={1}>
                 <MeasureAmountUnit
                   amount={
-                    selectedItems.individualWeight
-                      ? selectedItems.individualWeight
+                    selectedItems.individualPackageWeight
+                      ? selectedItems.individualPackageWeight
                       : 0
                   }
-                  unitOfMeasure={selectedItems.individualUnitOfMeasure}
+                  unitOfMeasure={selectedItems.individualPackageWeightUnit}
                   amountLabel="Individual package weight"
                   onChange={(amount, unit) => {
                     setSelectedItems((oldValue) => ({
                       ...oldValue,
-                      individualWeight: amount,
-                      individualUnitOfMeasure: unit,
+                      individualPackageWeight: amount,
+                      individualPackageWeightUnit: unit,
                     }));
                   }}
                   unitLabel="Weight unit"
