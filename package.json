@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@ag.ds-next/a11y": "latest",
 		"@ag.ds-next/ag-branding": "latest",
+		"@ag.ds-next/badge": "latest",
 		"@ag.ds-next/body": "latest",
 		"@ag.ds-next/box": "latest",
 		"@ag.ds-next/button": "latest",
@@ -25,6 +26,7 @@
 		"@ag.ds-next/link-list": "latest",
 		"@ag.ds-next/loading": "latest",
 		"@ag.ds-next/main-nav": "latest",
+		"@ag.ds-next/skeleton": "latest",
 		"@ag.ds-next/skip-link": "latest",
 		"@ag.ds-next/text": "latest",
 		"@ag.ds-next/text-link": "latest",
