@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Body } from '@ag.ds-next/body';
+import { Prose } from '@ag.ds-next/prose';
 import { PageContent } from '@ag.ds-next/content';
 import { AppLayout } from '../components/AppLayout';
 import { DocumentTitle } from '../components/DocumentTitle';
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 			<DocumentTitle title="Home" />
 			<AppLayout>
 				<PageContent>
-					<Body>
+					<Prose>
 						<h1>AG Design System Starter Kit</h1>
 						<p>
 							This is a simple starter kit built using the AG Design System,
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
 								example site
 							</a>
 						</p>
-					</Body>
+					</Prose>
 				</PageContent>
 			</AppLayout>
 		</>
