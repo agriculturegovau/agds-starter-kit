@@ -1,7 +1,8 @@
-import { AppLayout } from './AppLayout';
+import { AppLayout } from '.';
 
 export default {
 	title: 'Components/AppLayout',
+	component: AppLayout,
 };
 
 export const Default = () => {

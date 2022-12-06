@@ -7,6 +7,7 @@ const config: StorybookConfig = {
 		'@storybook/addon-links',
 		{ name: '@storybook/addon-essentials', options: { backgrounds: false } },
 		'@storybook/addon-postcss',
+		'storybook-addon-next-router',
 	],
 	framework: '@storybook/react',
 	core: {

@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { Box, Flex } from '@ag.ds-next/box';
 import { SkipLinks } from '@ag.ds-next/skip-link';
-import { SiteHeader } from './SiteHeader';
-import { SiteFooter } from './SiteFooter';
+import { SiteHeader } from '../SiteHeader';
+import { SiteFooter } from '../SiteFooter';
 
 export const AppLayout = ({ children }: { children: ReactNode }) => {
 	return (

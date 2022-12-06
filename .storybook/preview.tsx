@@ -2,6 +2,7 @@ import { DecoratorFn } from '@storybook/react';
 import { Core } from '@ag.ds-next/core';
 import { Box } from '@ag.ds-next/box';
 import { theme } from '@ag.ds-next/ag-branding';
+import { RouterContext } from 'next/dist/shared/lib/router-context'; // next 12
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
@@ -10,6 +11,9 @@ export const parameters = {
 			color: /(background|color)$/i,
 			date: /Date$/,
 		},
+	},
+	nextRouter: {
+		Provider: RouterContext.Provider,
 	},
 };
 
