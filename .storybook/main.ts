@@ -1,16 +1,25 @@
-module.exports = {
-	stories: [
-		'../components/**/*.stories.@(js|jsx|ts|tsx)',
-		'../stories/**/*.stories.@(mdx|js|jsx|ts|tsx)',
-	],
+import type { StorybookConfig } from '@storybook/core-common';
+
+const config: StorybookConfig = {
+	stories: ['../components/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
 		'@storybook/addon-a11y',
 		'@storybook/addon-links',
-		'@storybook/addon-essentials',
-		'@storybook/addon-interactions',
+		{ name: '@storybook/addon-essentials', options: { backgrounds: false } },
+		'@storybook/addon-postcss',
 	],
 	framework: '@storybook/react',
 	core: {
-		builder: '@storybook/builder-webpack5',
+		builder: 'webpack5',
 	},
+	features: {
+		/**
+		 * Enable code splitting
+		 * @see https://storybook.js.org/docs/react/builders/webpack#code-splitting
+		 */
+		storyStoreV7: true,
+	},
+	staticDirs: ['../public'],
 };
+
+export default config;
