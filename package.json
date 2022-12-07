@@ -8,6 +8,7 @@
 		"start": "next start",
 		"storybook": "start-storybook -p 6006",
 		"build-storybook": "build-storybook",
+		"lint": "lint:app && lint:prettier",
 		"lint:app": "next lint",
 		"lint:prettier": "prettier --check \"**/*.{js,jsx,json,ts,tsx,md,mdx,yml,yaml}\"",
 		"format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx}\""
