@@ -1,6 +1,6 @@
-import { H1 } from '@ag.ds-next/heading';
-import { Text } from '@ag.ds-next/text';
-import { PageContent } from '@ag.ds-next/content';
+import { H1 } from '@ag.ds-next/react/heading';
+import { Text } from '@ag.ds-next/react/text';
+import { PageContent } from '@ag.ds-next/react/content';
 import { AppLayout } from '../components/AppLayout';
 import { DocumentTitle } from '../components/DocumentTitle';
 

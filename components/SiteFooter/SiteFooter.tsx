@@ -1,7 +1,7 @@
-import { Box } from '@ag.ds-next/box';
-import { Footer, FooterDivider } from '@ag.ds-next/footer';
-import { LinkList } from '@ag.ds-next/link-list';
-import { Text } from '@ag.ds-next/text';
+import { Box } from '@ag.ds-next/react/box';
+import { Footer, FooterDivider } from '@ag.ds-next/react/footer';
+import { LinkList } from '@ag.ds-next/react/link-list';
+import { Text } from '@ag.ds-next/react/text';
 
 const footerLinks = [
 	{ href: '#', label: 'Accessibility' },
