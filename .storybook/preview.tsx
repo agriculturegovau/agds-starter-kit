@@ -1,7 +1,7 @@
 import { DecoratorFn } from '@storybook/react';
-import { Core } from '@ag.ds-next/core';
-import { Box } from '@ag.ds-next/box';
-import { theme } from '@ag.ds-next/ag-branding';
+import { Core } from '@ag.ds-next/react/core';
+import { Box } from '@ag.ds-next/react/box';
+import { theme } from '@ag.ds-next/react/ag-branding';
 import { RouterContext } from 'next/dist/shared/lib/router-context'; // next 12
 
 export const parameters = {
