@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ag.ds-next/react@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ag.ds-next/react/-/react-1.0.0.tgz#1fbe3439619af71f35bc68ac86b304838e03a2e4"
-  integrity sha512-wiT9qHlWtE7C8oonZujgmZqmcppnrful+ZThKzwLs1sbktGQLxaTw4dkMW16fDtwHmp6yo5g8z60Kcr+JVU58Q==
+"@ag.ds-next/react@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@ag.ds-next/react/-/react-1.2.0.tgz#d0ff4aa4a78ba28cafd0a7b20a423bfdd675a3ae"
+  integrity sha512-sjctzj30GZI7nYE2IuytroDp45WETgfF6djuZTLaTu8knwB7lX9jKbDhYH5I4cmskKUX4Kdr9M8sN8jRT+tbCQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@popperjs/core" "^2.11.4"
