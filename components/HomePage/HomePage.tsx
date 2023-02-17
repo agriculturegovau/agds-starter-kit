@@ -14,13 +14,10 @@ export const HomePage = () => {
 					</p>
 					<p>
 						For examples of common user interfaces, please refer to the{' '}
-						<a
-							href="https://steelthreads.github.io/agds-next/example-site/"
-							target="_blank"
-							rel="nofollow noreferrer"
-						>
-							example site
+						<a href="https://design-system.agriculture.gov.au/templates">
+							design system templates.
 						</a>
+						.
 					</p>
 				</Prose>
 			</PageContent>
