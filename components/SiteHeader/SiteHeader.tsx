@@ -24,7 +24,7 @@ export const SiteHeader = () => {
 				secondaryItems={[
 					{
 						label: 'Github',
-						href: 'https://github.com/steelthreads/agds-next-starter-kit',
+						href: 'https://github.com/agriculturegovau/agds-next-starter-kit',
 					},
 				]}
 			/>

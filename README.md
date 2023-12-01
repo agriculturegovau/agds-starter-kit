@@ -2,7 +2,7 @@
 
 This is a simple starter kit built using the AG Design System, NextJS and Typescript. It is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-For more information about the AG Design System, please see the [documentation wesbite]([https://agriculturegovau.github.io/agds-next](https://design-system.agriculture.gov.au/)).
+For more information about the AG Design System, please see the [documentation website](https://design-system.agriculture.gov.au/).
 
 For examples of common user interfaces, please see the [example site](https://design-system.agriculture.gov.au/example-site).
 
