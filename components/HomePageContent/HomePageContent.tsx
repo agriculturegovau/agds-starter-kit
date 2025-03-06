@@ -1,4 +1,5 @@
 import { Prose } from '@ag.ds-next/react/prose';
+import { FormExample } from '../FormExample/FormExample';
 
 export const HomePageContent = () => {
 	return (
@@ -15,6 +16,8 @@ export const HomePageContent = () => {
 				</a>
 				.
 			</p>
+
+			<FormExample />
 		</Prose>
 	);
 };
