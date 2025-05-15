@@ -1,9 +1,11 @@
 import { AppLayout } from '.';
 
-export default {
+const meta = {
 	title: 'Components/AppLayout',
 	component: AppLayout,
 };
+
+export default meta;
 
 export const Default = () => {
 	return (

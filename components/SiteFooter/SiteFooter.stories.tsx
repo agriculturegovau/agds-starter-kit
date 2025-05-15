@@ -1,9 +1,11 @@
 import { SiteFooter } from './SiteFooter';
 
-export default {
+const meta = {
 	title: 'Components/SiteFooter',
 	component: SiteFooter,
 };
+
+export default meta;
 
 export const Default = () => {
 	return <SiteFooter />;

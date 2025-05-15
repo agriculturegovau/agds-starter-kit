@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { Box, Flex } from '@ag.ds-next/react/box';
+import { Box } from '@ag.ds-next/react/box';
+import { Flex } from '@ag.ds-next/react/flex';
 import { SkipLinks } from '@ag.ds-next/react/skip-link';
 import { SiteHeader } from '../SiteHeader';
 import { SiteFooter } from '../SiteFooter';
@@ -16,11 +17,11 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
 			<Flex
 				flexDirection="column"
 				fontFamily="body"
-				palette="light"
 				minHeight="100vh"
+				palette="light"
 			>
 				<SiteHeader />
-				<Box as="main" id="main-content" flexGrow={1}>
+				<Box as="main" flexGrow={1} id="main-content">
 					{children}
 				</Box>
 				<SiteFooter />

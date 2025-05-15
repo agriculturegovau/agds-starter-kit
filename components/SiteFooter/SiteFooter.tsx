@@ -12,7 +12,7 @@ const footerLinks = [
 export const SiteFooter = () => (
 	<Box palette="dark">
 		<Footer background="bodyAlt">
-			<LinkList links={footerLinks} horizontal />
+			<LinkList horizontal links={footerLinks} />
 			<FooterDivider />
 			<Text fontSize="xs" maxWidth="42em">
 				We acknowledge the traditional owners of country throughout Australia
