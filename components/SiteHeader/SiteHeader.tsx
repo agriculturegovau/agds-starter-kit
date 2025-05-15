@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { Logo } from '@ag.ds-next/react/ag-branding';
-import { Stack } from '@ag.ds-next/react/box';
 import { Header } from '@ag.ds-next/react/header';
 import { MainNav } from '@ag.ds-next/react/main-nav';
+import { Stack } from '@ag.ds-next/react/stack';
 
 const NAV_LINKS = [{ label: 'Home', href: '/' }];
 
@@ -12,15 +12,15 @@ export const SiteHeader = () => {
 		<Stack palette="dark">
 			<Header
 				background="bodyAlt"
-				logo={<Logo />}
-				heading="Agriculture Design System"
-				subline="Design System for the Export Service"
 				badgeLabel="Beta"
+				heading="Agriculture Design System"
+				logo={<Logo />}
+				subline="Design System for the Export Service"
 			/>
 			<MainNav
+				activePath={router.asPath}
 				id="main-nav"
 				items={NAV_LINKS}
-				activePath={router.asPath}
 				secondaryItems={[
 					{
 						label: 'Github',

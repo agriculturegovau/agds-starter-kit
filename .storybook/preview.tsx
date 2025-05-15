@@ -21,10 +21,10 @@ const preview: Preview = {
 			return (
 				<Core theme={theme}>
 					<Box
-						width="100%"
+						background="body"
 						minHeight="100vh"
 						palette={palette}
-						background="body"
+						width="100%"
 					>
 						<Story />
 					</Box>
